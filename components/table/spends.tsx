@@ -38,7 +38,7 @@ export const SpendsTable = async ({query}: {query: string}) => {
                   <span className="font-semibold">{new Intl.NumberFormat().format(parseInt(spend.subtotal))}</span>
                 </div>
               </TableCell>
-              <TableCell className="flex justify-center gap-2">
+              <TableCell>
                 <ActionButton data="spends" id={spend.id} name={"Pengeluaran : " + spend.name}/>
               </TableCell>
             </TableRow>

@@ -27,7 +27,7 @@ export const ProductsTable = async ({query, currentPage}:{query: string, current
             {products?.map((product, index) => (
               <TableRow key={product.id}>
                 <TableCell className="text-center">{index+1}</TableCell>
-                <TableCell className="font-semibold">
+                <TableCell>
                   <div className="flex flex-col gap-0">
                     <span className="font-semibold">{product.name}</span>
                     <span className="text-sm text-muted-foreground">

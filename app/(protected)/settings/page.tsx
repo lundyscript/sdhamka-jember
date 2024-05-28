@@ -54,7 +54,7 @@ const SettingsPage = () => {
     <>
       <Heading title="Settings." description="Pengaturan akun."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="flex flex-col gap-4 w-96 mx-auto justify-center">
+      <div className="flex flex-col gap-4 lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-4">

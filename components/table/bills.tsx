@@ -69,8 +69,7 @@ export const BillsTable = ({orders, products}: {orders: any, products: any}) => 
                 <TableRow key={order.invoice}>
                   <TableCell className="align-top">
                     <div className="flex flex-col">
-                      <span className="font-semibold">#{order.invoice.substring(0,8)}</span>
-                      <span className="flex flex-row gap-2">{format(order.orderedAt, "dd/MM/yyyy")}</span>
+                      <span className="font-semibold">#{order.invoice.substring(0,8)} <span className="font-normal">&nbsp;|&nbsp; {format(order.orderedAt, "dd/MM/yyyy")}</span></span>
                       <span className="font-semibold">{order.buyer}</span>
                       <span>{order.phoneNumber}</span>
                     </div>

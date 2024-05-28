@@ -32,7 +32,7 @@ const AdminPage = () => {
     <>
       <Heading title="Admin." description="Lihat hak akses pengguna aplikasi."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="flex flex-col gap-4 w-96 mx-auto justify-center">
+      <div className="flex flex-col gap-4 lg:w-96 mx-auto justify-center">
         <RoleGate allowedRole={UserRole.ADMIN}>
           <Success message="You are allowed to see this content!"/>
         </RoleGate>

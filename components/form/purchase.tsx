@@ -50,7 +50,7 @@ export const NewPurchaseForm = ({ingredients}: {ingredients: any}) => {
     <>
       <Heading title="Pembelian Baru." description="Isikan data pembelian bahan baku produksi baru."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="name" render={({ field }) => (
@@ -163,7 +163,7 @@ export const UpdatePurchaseForm: React.FC<UpdatePurchasesFormProps> = ({initialD
     <>
       <Heading title="Ubah Data Pembelian." description="Isikan data pembelian dengan benar."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="name" render={({ field }) => (

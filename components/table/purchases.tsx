@@ -37,7 +37,7 @@ export const PurchasesTable = async ({query}: {query: string}) => {
                   <span className="font-semibold">{new Intl.NumberFormat().format(parseInt(purchase.subtotal))}</span>
                 </div>
               </TableCell>
-              <TableCell className="flex justify-center gap-2">
+              <TableCell>
                 <ActionButton data="purchases" id={purchase.id} name={"Pembelian : " + purchase.name}/>
               </TableCell>
             </TableRow>

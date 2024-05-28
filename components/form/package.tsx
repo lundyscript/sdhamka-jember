@@ -51,7 +51,7 @@ export const NewPackagingForm = ({employees, products}: {employees: any, product
     <>
       <Heading title="Pengemasan Baru." description="Isikan data pengemasan baru."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="employee" render={({ field }) => (
@@ -192,7 +192,7 @@ export const UpdatePackagingForm: React.FC<UpdatePackagingFormProps> = ({initial
     <>
       <Heading title="Ubah Data Pengemasan." description="Isikan data pengemasan dengan benar."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="employee" render={({ field }) => (

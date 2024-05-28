@@ -43,7 +43,7 @@ export const NewEmployeeForm = () => {
     <>
       <Heading title="Karyawan Baru." description="Isikan data karyawan baru."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="name" render={({ field }) => (
@@ -120,7 +120,7 @@ export const UpdateEmployeeForm: React.FC<UpdateEmployeesFormProps> = ({initialD
     <>
       <Heading title="Ubah Data Produk." description="Isikan data produk dengan benar."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
       <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField control={form.control} name="name" render={({ field }) => (

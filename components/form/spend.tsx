@@ -49,7 +49,7 @@ export const NewSpendForm = () => {
     <>
       <Heading title="Pengeluaran Baru." description="Isikan data pengeluaran operasional atau produksi baru."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-2 grid grid-cols-2 gap-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="category" render={({ field }) => (
@@ -150,7 +150,7 @@ export const UpdateSpendForm: React.FC<UpdateSpendsFormProps> = ({initialData}) 
     <>
       <Heading title="Ubah Data Pengeluaran." description="Isikan data pengeluaran dengan benar."/>
       <Separator orientation="horizontal" className="my-4"/>
-      <div className="w-96 mx-auto justify-center">
+      <div className="lg:w-96 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-2 grid grid-cols-2 gap-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField control={form.control} name="category" render={({ field }) => (
