@@ -10,7 +10,7 @@ export const SalarysTable = async ({query}: {query: string}) => {
   const salarys = await getSalarys(query)
   let profit = income - expenditure
   let salary = 70/100 * profit
-  const honorarium = await getHonorarium(query)
+  const honorarium = await getHonorarium(query) as any
   return (
     <>
       {!salary ? 

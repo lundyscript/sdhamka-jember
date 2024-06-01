@@ -256,6 +256,5 @@ export const getHonorarium = async (query: string) => {
     }
   }
   Object.assign(employees, {totalHonor: totalHR})
-  console.log(employees)
   return employees
 }
