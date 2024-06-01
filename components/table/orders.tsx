@@ -61,13 +61,13 @@ export const OrdersTable = async ({query}: {query: string}) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="font-bold w-32">#Invoice <span className="font-normal">|</span> Tanggal</TableHead>
-                <TableHead className="font-bold">Pembayaran</TableHead>
-                <TableHead className="font-bold">Nama Pelanggan <span className="font-normal">|</span> Nomor Telepon</TableHead>
-                <TableHead className="font-bold">Dikirim? <span className="font-normal">|</span> Catatan</TableHead>
-                <TableHead className="text-center font-bold">Produk <span className="font-normal">|</span> Harga (Rp) <span className="font-normal">|</span> Jumlah</TableHead>
-                <TableHead className="text-right font-bold">Total (Rp)</TableHead>
-                <TableHead className="text-center font-bold">Aksi</TableHead>
+                <TableHead className="w-32">#Invoice <span className="font-normal">|</span> Tanggal</TableHead>
+                <TableHead className="text-center">Pembayaran</TableHead>
+                <TableHead className="">Nama Pelanggan <span className="font-normal">|</span> Nomor Telepon</TableHead>
+                <TableHead className="">Dikirim? <span className="font-normal">|</span> Catatan</TableHead>
+                <TableHead className="text-center">Produk <span className="font-normal">|</span> Harga (Rp) <span className="font-normal">|</span> Jumlah</TableHead>
+                <TableHead className="text-right">Total (Rp)</TableHead>
+                <TableHead className="text-center">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,7 +79,7 @@ export const OrdersTable = async ({query}: {query: string}) => {
                     <span className="flex flex-row gap-2">{format(order.orderedAt, "dd/MM/yyyy")}</span>
                   </div>
                 </TableCell>
-                <TableCell className="align-top">
+                <TableCell className="text-center align-top">
                   {order.payment == true ? 
                     <TooltipProvider delayDuration={0}>
                       <Tooltip>

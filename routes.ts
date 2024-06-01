@@ -6,16 +6,6 @@
 export const publicRoutes = [
   "/",
   "/auth/new-verification",
-  // "/admin",
-  // "/buyers",
-  // "/buyers/create",
-  // "/buyers/edit/clu5i2be80006psvbux9b6dbp",
-  // "/products",
-  // "/products/create",
-  // "/products/edit/clucwt81l0001xf7ogif55f1f",
-  // "/settings",
-  // "/orders",
-  // "/orders/create"
 ]
 
 /**

@@ -3,7 +3,6 @@ import * as z from "zod"
 import { v4 as uuidv4 } from "uuid"
 import { db } from "@/lib/db"
 import { OrderSchema } from "@/schemas"
-import { getProducts } from "@/data/products"
 export const newOrderAction = async (values: z.infer<typeof OrderSchema>, cart: any) => {
   const validatedFields = OrderSchema.safeParse(values)
   if(!validatedFields.success){
@@ -23,23 +22,24 @@ export const newOrderAction = async (values: z.infer<typeof OrderSchema>, cart: 
         const currentStock = await db.products.findFirst({
           where: { name: cart[i]["name"] }
         })
-        const checkStock = Number(currentStock?.stock) - Number(cart[i]["qty"])
-        if (checkStock > 0) {
-          const newStock = Number(currentStock?.stock) - Number(cart[i]["qty"])
-          await db.products.update({
-            data:{
-              stock: newStock.toString()
-            },
-            where:{id:currentStock?.id}
-          })
-        } else {
-          return { error: "Gagal menambahkan data pengemasan baru, stok produk tidak cukup!" }
+        if (currentStock?.stock !== "~") {
+          const checkStock = Number(currentStock?.stock) - Number(cart[i]["qty"])
+          if (checkStock >= 0) {
+            const newStock = Number(currentStock?.stock) - Number(cart[i]["qty"])
+            await db.products.update({
+              data:{
+                stock: newStock.toString()
+              },
+              where:{id:currentStock?.id}
+            })
+          } else {
+            return { error: "Gagal menambahkan data pengemasan baru, stok produk tidak cukup!" }
+          }
         }
         await db.orders.create({
           data: { invoice, buyer, phoneNumber, notes, delivery, payment, orderedAt, paidAt, product, quantity, price, subtotal }
         })
       }
-
     }
     return { success: "Data penjualan baru berhasil ditambahkan." }
   } catch (error) {
@@ -54,13 +54,15 @@ export const deleteOrdertAction = async (id:string) => {
       const currentStock = await db.products.findFirst({
         where: { name: checkStock[i].product }
       })
-      const newStock = Number(currentStock?.stock) + Number(checkStock[i].quantity)
-      await db.products.update({
-        data:{
-          stock: newStock.toString()
-        },
-        where:{id:currentStock?.id}
-      })
+      if (currentStock?.stock !== "~") {
+        const newStock = Number(currentStock?.stock) + Number(checkStock[i].quantity)
+        await db.products.update({
+          data:{
+            stock: newStock.toString()
+          },
+          where:{id:currentStock?.id}
+        })
+      }
     }
     await db.orders.deleteMany({
       where:{ invoice: id }

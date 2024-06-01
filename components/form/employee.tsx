@@ -67,7 +67,9 @@ export const NewEmployeeForm = () => {
                       <SelectItem value="Pimpinan">Pimpinan</SelectItem>
                       <SelectItem value="Karyawan">Karyawan</SelectItem>
                       <SelectItem value="Magang">Magang</SelectItem>
-                      <SelectItem value="Kurir">Kurir</SelectItem>
+                      <SelectItem value="Kurir 1">Kurir 1</SelectItem>
+                      <SelectItem value="Kurir 2">Kurir 2</SelectItem>
+                      <SelectItem value="Packing">Packing</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -144,7 +146,9 @@ export const UpdateEmployeeForm: React.FC<UpdateEmployeesFormProps> = ({initialD
                       <SelectItem value="Pimpinan">Pimpinan</SelectItem>
                       <SelectItem value="Karyawan">Karyawan</SelectItem>
                       <SelectItem value="Magang">Magang</SelectItem>
-                      <SelectItem value="Kurir">Kurir</SelectItem>
+                      <SelectItem value="Kurir 1">Kurir 1</SelectItem>
+                      <SelectItem value="Kurir 2">Kurir 2</SelectItem>
+                      <SelectItem value="Packing">Packing</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

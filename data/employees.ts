@@ -12,7 +12,7 @@ export const getEmployees = async (query: string, currentPage: number) => {
         ]
       },
       orderBy: [
-        {createdAt: 'desc'}
+        {position: 'desc'}
       ]
     })
     return employees

@@ -1,7 +1,5 @@
 import { db } from "@/lib/db"
-import { getAllEmployees } from "./employees"
-import { object } from "zod"
-import { useState } from "react"
+import { getAllOrders, getAllOrdersInExcel } from "./orders"
 export const getAllFullIncome = async (query: string) => {
   const defaultDate = { from: new Date(new Date().setHours(7,0,0,0)), to: new Date(new Date().setHours(30,59,59,0)) }
   const objectDate = query ? JSON.parse(query) : defaultDate
@@ -127,15 +125,15 @@ export const getSalarys = async (query: string) => {
   const employees = await db.employees.findMany({
     where:{
       OR: [
-        {position: { contains: 'Pimpinan'} },
-        {position: { contains: 'Karyawan'} },
-        {position: { contains: 'Magang'} },
+        { position: { contains: 'Pimpinan'} },
+        { position: { contains: 'Karyawan'} },
+        { position: { contains: 'Magang'} },
       ],
-      NOT: {
-        position: {
-          contains: 'Kurir',
-        },
-      },
+      NOT:[
+        { position: { contains: 'Kurir 1'} },
+        { position: { contains: 'Kurir 2'} },
+        { position: { contains: 'Packing'} },
+      ],
     }
   })
   for (var i = 0; i < employees.length; i++) {
@@ -149,5 +147,115 @@ export const getSalarys = async (query: string) => {
       Object.assign(employees[i], {nominal: 22/100 * salary})
     }
   }
+  return employees
+}
+
+export const getQtyPacking = async (query: string, employee: string) => {
+  const defaultDate = { from: new Date(new Date().setHours(7,0,0,0)), to: new Date(new Date().setHours(30,59,59,0)) }
+  const objectDate = query ? JSON.parse(query) : defaultDate
+  const dateRange = !objectDate.to ? { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.from).setHours(30,59,59,0)) } : { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.to).setHours(30,59,59,0)) }
+  const date = query ? dateRange : defaultDate
+  try {
+    const packages = await db.packages.findMany({
+      where:{
+        employee: employee,
+        packedAt: {
+          gte: date.from,
+          lte: date.to,
+        }
+      },
+      orderBy: [
+        {packedAt: 'desc'}
+      ]
+    })
+    let qtyPacking = 0
+    for (let i = 0; i < packages.length; i++) {
+      qtyPacking += Number(packages[i].quantity)
+    }
+    return qtyPacking
+  } catch (error) {
+    throw new Error("Failed to fetch data.")
+  }
+}
+
+export const getQtyOrders = async (query: string) => {
+  const defaultDate = { from: new Date(new Date().setHours(7,0,0,0)), to: new Date(new Date().setHours(30,59,59,0)) }
+  const objectDate = query ? JSON.parse(query) : defaultDate
+  const dateRange = !objectDate.to ? { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.from).setHours(30,59,59,0)) } : { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.to).setHours(30,59,59,0)) }
+  const date = query ? dateRange : defaultDate
+  try {
+    const galon = await db.orders.findMany({
+      where:{
+        product:{ contains: "Galon", mode: "insensitive" },
+        orderedAt: {
+          gte: date.from,
+          lte: date.to,
+        }
+      },
+      orderBy: [
+        {orderedAt: 'desc'}
+      ]
+    })
+    let qtyGalon = 0
+    for (let i = 0; i < galon.length; i++) {
+      qtyGalon += Number(galon[i].quantity)
+    }
+    const dus = await db.orders.findMany({
+      where:{
+        product:{ contains: "Dus", mode: "insensitive" },
+        orderedAt: {
+          gte: date.from,
+          lte: date.to,
+        }
+      },
+      orderBy: [
+        {orderedAt: 'desc'}
+      ]
+    })
+    let qtyDus = 0
+    for (let i = 0; i < dus.length; i++) {
+      qtyDus += Number(dus[i].quantity)
+    }
+    return {qtyGalon,qtyDus}
+  } catch (error) {
+    throw new Error("Failed to fetch data.")
+  }
+}
+
+export const getHonorarium = async (query: string) => {
+  const employees = await db.employees.findMany({
+    where:{
+      OR: [
+        { position: { contains: 'Kurir 1'} },
+        { position: { contains: 'Kurir 2'} },
+        { position: { contains: 'Packing'} },
+      ],
+      NOT: [
+        { position: { contains: 'Pimpinan'} },
+        { position: { contains: 'Karyawan'} },
+        { position: { contains: 'Magang'} },
+      ],
+    }
+  })
+  let totalHR = 0
+  for (let i = 0; i < employees.length; i++) {
+    if (employees[i].position == 'Packing') {
+      const qtyPacking = await getQtyPacking(query, employees[i].name)
+      Object.assign(employees[i], {jumlah: qtyPacking, nominal: 400 * qtyPacking})
+      totalHR += 400 * qtyPacking
+    }
+    if (employees[i].position == 'Kurir 1') {
+      const qtyDelivery = await getQtyOrders(query)
+      Object.assign(employees[i], {jumlah1: qtyDelivery.qtyGalon, jumlah2: qtyDelivery.qtyDus, nominal: (1200 * qtyDelivery.qtyGalon) + (150 * qtyDelivery.qtyDus)})
+      totalHR += (1200 * qtyDelivery.qtyGalon) + (150 * qtyDelivery.qtyDus)
+    }
+    if (employees[i].position == 'Kurir 2') {
+      const qtyDelivery = await getQtyOrders(query)
+      Object.assign(employees[i], {jumlah1: qtyDelivery.qtyGalon, jumlah2: qtyDelivery.qtyDus, nominal: (1000 * qtyDelivery.qtyGalon) + (150 * qtyDelivery.qtyDus)})
+      totalHR += (1000 * qtyDelivery.qtyGalon) + (150 * qtyDelivery.qtyDus)
+    }
+  }
+  Object.assign(employees, {totalHonor: totalHR})
+  console.log(employees)
   return employees
 }

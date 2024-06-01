@@ -124,14 +124,14 @@ export const NewOrderForm = ({buyers, products}: {buyers: any, products: any}) =
                       <span>{new Intl.NumberFormat().format(parseInt(product.price))}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="flex justify-center place-items-center">
+                  <TableCell>
                     <div className="flex flex-row py-0 items-center">
-                      {product.qty == "0" ? 
+                      {product.qty == "0" || product.qty == "~" ? 
                         <Button disabled variant={"outline"} size={"icon"} className="w-10 h-10 rounded-r-none border-r-0"><Minus size={15}/></Button>
                       : 
                         <Button onClick={() => minQty(product.id)} variant={"outline"} size={"icon"} className="w-10 h-10 rounded-r-none border-r-0"><Minus size={15}/></Button>
                       }
-                      {product.stock == "0" ?
+                      {product.stock == "0" || product.qty == "~"  ?
                         <>
                           <Input disabled  className="px-1.5 w-10 text-xs text-center rounded-none focus-visible:ring-0"/>
                           <Button disabled variant={"outline"} size={"icon"} className="w-10 h-10 rounded-l-none border-l-0"><Plus size={15}/></Button>

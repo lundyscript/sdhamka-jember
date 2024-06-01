@@ -50,8 +50,8 @@ export const IngredientsTable = async ({query, currentPage}:{query: string, curr
               <TableRow>
                 <TableHead className="w-10 text-center">#</TableHead>
                 <TableHead>Nama Bahan</TableHead>
-                <TableHead>Harga (Rp)</TableHead>
-                <TableHead>Stok</TableHead>
+                <TableHead className="text-right">Harga (Rp)</TableHead>
+                <TableHead className="text-center">Stok</TableHead>
                 <TableHead className="text-center">Aksi</TableHead>
               </TableRow>
             </TableHeader>
@@ -60,8 +60,8 @@ export const IngredientsTable = async ({query, currentPage}:{query: string, curr
               <TableRow key={ingredient.id}>
                 <TableCell className="text-center">{index+1}</TableCell>
                 <TableCell className="font-semibold">{ingredient.name}</TableCell>
-                <TableCell>{new Intl.NumberFormat().format(parseInt(ingredient.price))}</TableCell>
-                <TableCell className="font-semibold">{new Intl.NumberFormat().format(parseInt(ingredient.stock))}</TableCell>
+                <TableCell className="text-right">{new Intl.NumberFormat().format(parseInt(ingredient.price))}</TableCell>
+                <TableCell className="text-center font-semibold">{new Intl.NumberFormat().format(parseInt(ingredient.stock))}</TableCell>
                 <TableCell className="flex justify-center gap-2">
                   <ActionButton data="ingredients" id={ingredient.id} name={"Bahan : " + ingredient.name}/>
                 </TableCell>

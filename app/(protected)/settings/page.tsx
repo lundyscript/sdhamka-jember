@@ -31,6 +31,7 @@ const SettingsPage = () => {
       email: user?.email || undefined,
       password: undefined,
       newPassword: undefined,
+      image: user?.image || undefined,
       role: user?.role || undefined,
       isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
     }
@@ -90,6 +91,13 @@ const SettingsPage = () => {
                   )}/>
                 </>
               ) }
+              <FormField control={form.control} name="image" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image</FormLabel>
+                  <FormControl><Input {...field} placeholder="https://ui.shadcn.com/avatars/01.png" disabled={isPending}/></FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}/>
               <FormField control={form.control} name="role" render={({ field }) => (
                 <FormItem>
                   <FormLabel>Role</FormLabel>

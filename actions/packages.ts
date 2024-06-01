@@ -18,7 +18,7 @@ export const newPackagingAction = async (values: z.infer<typeof PackagingSchema>
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (48*Number(quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus' || Arr[i] == 'Sedotan') {
             const newStock = Number(currentStock?.stock) - Number(quantity)
             await db.ingredients.update({
@@ -48,7 +48,7 @@ export const newPackagingAction = async (values: z.infer<typeof PackagingSchema>
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (28*Number(quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus') {
             const newStock = Number(currentStock?.stock) - Number(quantity)
             await db.ingredients.update({
@@ -78,7 +78,7 @@ export const newPackagingAction = async (values: z.infer<typeof PackagingSchema>
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (18*Number(quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus') {
             const newStock = Number(currentStock?.stock) - Number(quantity)
             await db.ingredients.update({
@@ -137,7 +137,7 @@ export const updatePackagingAction = async (id:string, values: z.infer<typeof Pa
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (48*Number(validatedFields.data.quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus' || Arr[i] == 'Sedotan') {
             const newStock = Number(currentStock?.stock) - Number(validatedFields.data.quantity)
             await db.ingredients.update({
@@ -167,7 +167,7 @@ export const updatePackagingAction = async (id:string, values: z.infer<typeof Pa
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (28*Number(validatedFields.data.quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus') {
             const newStock = Number(currentStock?.stock) - Number(validatedFields.data.quantity)
             await db.ingredients.update({
@@ -197,7 +197,7 @@ export const updatePackagingAction = async (id:string, values: z.infer<typeof Pa
           where: { name: Arr[i] }
         })
         const checkStock = Number(currentStock?.stock) - (18*Number(validatedFields.data.quantity))
-        if (checkStock > 0) {
+        if (checkStock >= 0) {
           if (Arr[i] == 'Kardus') {
             const newStock = Number(currentStock?.stock) - Number(validatedFields.data.quantity)
             await db.ingredients.update({

@@ -152,7 +152,7 @@ export const UserButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="hover:cursor-pointer">
         <Avatar>
-          <AvatarImage src={user?.image || "https://ui.shadcn.com/avatars/01.png"} />
+          <AvatarImage src={user?.image || undefined} />
           <AvatarFallback><UserRound size={20}/></AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

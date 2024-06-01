@@ -109,7 +109,7 @@ export const LoginForm = () => {
     <CardFooter>
       {/* <SocialButton/> */}
       <LinkButton description="Forgot your password?" label="Reset" href="/auth/reset"/>
-      <LinkButton description="Don't have an account?" label="Register" href="/auth/register"/>
+      {/* <LinkButton description="Don't have an account?" label="Register" href="/auth/register"/> */}
     </CardFooter>
   </Card>
   )

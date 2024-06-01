@@ -31,7 +31,7 @@ export const ProductsTable = async ({query, currentPage}:{query: string, current
                   <div className="flex flex-col gap-0">
                     <span className="font-semibold">{product.name}</span>
                     <span className="text-sm text-muted-foreground">
-                      {new Intl.NumberFormat().format(parseInt(product.price))} &nbsp; <span className="text-primary font-thin text-xl">|</span> &nbsp; {new Intl.NumberFormat().format(parseInt(product.stock))}
+                      {new Intl.NumberFormat().format(parseInt(product.price))} &nbsp; <span className="text-primary font-thin text-xl">|</span> &nbsp; {product.stock}
                     </span>
                   </div>  
                 </TableCell>
@@ -51,8 +51,8 @@ export const ProductsTable = async ({query, currentPage}:{query: string, current
                 <TableHead className="w-10 text-center">#</TableHead>
                 <TableHead>Nama Produk  </TableHead>
                 <TableHead>Deskripsi</TableHead>
-                <TableHead>Harga (Rp)</TableHead>
-                <TableHead>Stok</TableHead>
+                <TableHead className="text-right">Harga (Rp)</TableHead>
+                <TableHead className="text-center">Stok</TableHead>
                 <TableHead className="text-center">Aksi</TableHead>
               </TableRow>
             </TableHeader>
@@ -62,8 +62,8 @@ export const ProductsTable = async ({query, currentPage}:{query: string, current
                 <TableCell className="text-center">{index+1}</TableCell>
                 <TableCell className="font-semibold">{product.name}</TableCell>
                 <TableCell>{product.description}</TableCell>
-                <TableCell className="font-semibold">{new Intl.NumberFormat().format(parseInt(product.price))}</TableCell>
-                <TableCell>{new Intl.NumberFormat().format(parseInt(product.stock))}</TableCell>
+                <TableCell className="text-right font-semibold">{new Intl.NumberFormat().format(parseInt(product.price))}</TableCell>
+                <TableCell className="text-center">{product.stock}</TableCell>
                 <TableCell className="flex justify-center gap-2">
                   <ActionButton data="products" id={product.id} name={"Produk : " + product.name}/>
                 </TableCell>

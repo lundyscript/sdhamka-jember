@@ -7,7 +7,7 @@ export const getPackages = async (query: string, currentPage: number) => {
   const dateRange = !objectDate.to ? { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.from).setHours(30,59,59,0)) } : { from: new Date(new Date(objectDate.from).setHours(7,0,0,0)), to: new Date(new Date(objectDate.to).setHours(30,59,59,0)) }
   const date = query ? dateRange : defaultDate
   try {
-    const Packages = await db.packages.findMany({
+    const packages = await db.packages.findMany({
       skip: offset,
       take: ITEMS_PER_PAGE,
       where:{
@@ -20,7 +20,7 @@ export const getPackages = async (query: string, currentPage: number) => {
         {packedAt: 'desc'}
       ]
     })
-    return Packages
+    return packages
   } catch (error) {
     throw new Error("Failed to fetch data.")
   }
