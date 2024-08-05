@@ -13,12 +13,12 @@ import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import { AnimatedListDemo } from "@/components/utils/list";
 import { getAllProfiles } from "@/data/profiles";
 import { BentoForHomePage } from "@/components/utils/grid";
-import { getAllTeachers } from "@/data/teachers";
+import { getHeadmasterData } from "@/data/teachers";
 
 const HomePage = async () => {
   const sejarah = await getAllProfiles("sejarah", 1)
   const visimisi = await getAllProfiles("visi misi", 1)
-  const kepsek = await getAllTeachers("Kepala Sekolah", 1)
+  const headmaster = await getHeadmasterData()
   return (
     <>
       { !sejarah.length || !visimisi.length ?
@@ -84,11 +84,11 @@ const HomePage = async () => {
                 <BlurFade delay={0.35} inView className="space-y-4">
                   <div className="z-10 flex">
                     <div className={cn( "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800",)} >
-                      {!kepsek?.length ? 
+                      {!headmaster ? 
                         ""
                       : 
                         <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-                          <span>{kepsek.values.name}</span>
+                          <span>{headmaster.name} ({headmaster.position})</span>
                           <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
                         </AnimatedShinyText>
                       }

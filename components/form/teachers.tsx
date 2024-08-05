@@ -15,12 +15,14 @@ import { Heading } from "@/components/utils/heading"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import 'react-quill/dist/quill.snow.css';
+import { getHeadmasterData } from "@/data/teachers"
 
 interface UpdateTeacherFormProps {
-  initialData: Teacher
+  initialData: Teacher,
+  headmaster: any
 }
 
-export const NewTeacherForm = () => {
+export const NewTeacherForm = ({headmaster}: {headmaster:any}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof TeacherSchema>>({
@@ -87,7 +89,11 @@ export const NewTeacherForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Kepala Sekolah">Kepala Sekolah</SelectItem>
+                    {headmaster ? 
+                      <SelectItem value="Kepala Sekolah" disabled>Kepala Sekolah</SelectItem>
+                    :
+                      <SelectItem value="Kepala Sekolah">Kepala Sekolah</SelectItem>
+                    }
                     <SelectItem value="Guru">Guru</SelectItem>
                     <SelectItem value="Tendik">Tendik</SelectItem>
                   </SelectContent>
@@ -116,7 +122,7 @@ export const NewTeacherForm = () => {
   )
 }
 
-export const UpdateTeacherForm: React.FC<UpdateTeacherFormProps> = ({initialData}) => {
+export const UpdateTeacherForm: React.FC<UpdateTeacherFormProps> = ({initialData, headmaster}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof TeacherSchema>>({
@@ -182,7 +188,11 @@ export const UpdateTeacherForm: React.FC<UpdateTeacherFormProps> = ({initialData
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Kepala Sekolah">Kepala Sekolah</SelectItem>
+                    {headmaster ? 
+                      <SelectItem value="Kepala Sekolah" disabled>Kepala Sekolah</SelectItem>
+                    :
+                      <SelectItem value="Kepala Sekolah">Kepala Sekolah</SelectItem>
+                    }
                     <SelectItem value="Guru">Guru</SelectItem>
                     <SelectItem value="Tendik">Tendik</SelectItem>
                   </SelectContent>

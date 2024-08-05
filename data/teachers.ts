@@ -75,6 +75,15 @@ export const getTeachersAllData = async () => {
   }
 }
 
+export const getAllTeachersData = async () => {
+  try {
+    const teachers = await db.teacher.findMany()
+    return teachers
+  } catch (error) {
+    throw new Error("Failed to fetch data.")
+  }
+}
+
 export const getTeacherById = async (id: string | undefined) => {
   try {
     const teachers = await db.teacher.findUnique({
@@ -86,10 +95,18 @@ export const getTeacherById = async (id: string | undefined) => {
   }
 }
 
-export const getAllTeachersData = async () => {
+export const getHeadmasterData = async () => {
   try {
-    const teachers = await db.teacher.findMany()
-    return teachers
+    const headmaster = await db.teacher.findFirst({
+      where:{
+        OR:[
+          {
+            position:{ contains: "Kepala Sekolah", mode: "insensitive" },
+          }
+        ]
+      },
+    })
+    return headmaster
   } catch (error) {
     throw new Error("Failed to fetch data.")
   }
