@@ -18,7 +18,7 @@ export function SearchInput({label}: {label: string}) {
     replace(`${pathname}?${params.toString()}`)
   }, 300)
   return (
-    <div className="relative flex flex-1 max-w-xs">
+    <div className="relative flex flex-1">
       <Input type="text" onChange={(e) => handleSearch(e.target.value)} defaultValue={searchParams.get("query")?.toString()} placeholder={label} className="w-full lg:w-64 h-9 pl-8 text-s," />
       <MagnifyingGlassIcon className="absolute left-2 top-2 h-5 w-5 text-primary"/>
     </div>

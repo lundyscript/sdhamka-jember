@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import { DayPicker } from "react-day-picker"
-
+import { id } from "date-fns/locale";
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
@@ -17,13 +17,25 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      locale={id}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium",
+        caption: "w-full flex flex-col-reverse gap-2 pt-1 relative",
+        caption_label: "hidden text-sm font-medium absolute top-2 left-[25%]",
+        caption_dropdowns: "w-full flex justify-between gap-2",
+        dropdown: "bg-inherit w-full h-full whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+        dropdown_month: cn(
+          buttonVariants({ variant: "outline" }),
+          "p-0 w-full "
+        ),
+        dropdown_year: cn(
+          buttonVariants({ variant: "outline" }),
+          "p-0 w-full "
+        ),
+        vhidden:"hidden",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),

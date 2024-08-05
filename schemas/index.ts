@@ -63,59 +63,82 @@ export const NewPasswordSchema = z.object({
   }),
 })
 
-export const BuyerSchema = z.object({
+export const ProfilesSchema = z.object({
+  section: z.string(),
+  title: z.string(),
+  subtitle: z.string(),
+  body: z.string(),
+  image: z.string()
+})
+
+export const TeacherSchema = z.object({
   name: z.string(),
-  phoneNumber: z.string().min(11),
-  address: z.string().min(6),
-  notes: z.string()
-})
-
-export const ProductSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  price: z.string().min(4),
-  stock: z.string(),
-})
-
-export const OrderSchema = z.object({
-  buyer: z.string(),
-  phoneNumber: z.string(),
-  notes: z.string(),
-  delivery: z.boolean(),
-  payment: z.boolean(),
-  orderedAt: z.date(),
-})
-
-export const SpendSchema = z.object({
-  category: z.string(),
-  name: z.string(),
-  price: z.string().min(3),
-  quantity: z.string().min(1),
-  issuedAt: z.date(),
-})
-
-export const PurchaseSchema = z.object({
-  name: z.string(),
-  price: z.string().min(3),
-  quantity: z.string().min(1),
-  purchasedAt: z.date(),
-})
-
-export const IngredientSchema = z.object({
-  name: z.string(),
-  price: z.string().min(1),
-  stock: z.string(),
-})
-
-export const PackagingSchema = z.object({
-  employee: z.string(),
-  product: z.string(),
-  quantity: z.string().min(1),
-  packedAt: z.date(),
-})
-
-export const EmployeeSchema = z.object({
-  name: z.string(),
+  education: z.string(),
+  subjects: z.string(),
   position: z.string(),
-  image: z.string(),
+  whatsapp: z.string(),
+  image: z.string()
+})
+
+export const PostsSchema = z.object({
+  category: z.string(),
+  title: z.string(),
+  body: z.string(),
+  image: z.string()
+})
+
+export const PPDBSchema = z.object({
+  fullname                    : z.string().toUpperCase(),
+  nickname                    : z.string().toUpperCase(),
+  numberbirthcertificate      : z.string(),
+  nik                         : z.string(),
+  gender                      : z.string(),
+  childnumber                 : z.string(),
+  siblings                    : z.string(),
+  placeofbirth                : z.string(),
+  dateofbirth                 : z.date(),
+  address                     : z.string(),
+  livewith                    : z.string(),
+  childstatus                 : z.string(),
+  nisn                        : z.string(),
+  kindergarten                : z.string(),
+  kindergartenaddress         : z.string(),
+  fathersname                 : z.string(),
+  fathersnumber               : z.string(),
+  fathersplaceofbirth         : z.string(),
+  fathersdateofbirth          : z.date(),
+  fathersjob                  : z.string(),
+  fathersnameoftheagency      : z.optional(z.string()),
+  fathersaddressoftheagency   : z.optional(z.string()),
+  fatherslasteducation        : z.string(),
+  fathersincome               : z.string(),
+  mothersname                 : z.string(),
+  mothersnumber               : z.string(),
+  mothersplaceofbirth         : z.string(),
+  mothersdateofbirth          : z.date(),
+  mothersjob                  : z.string(),
+  mothersnameoftheagency      : z.optional(z.string()),
+  mothersaddressoftheagency   : z.optional(z.string()),
+  motherslasteducation        : z.string(),
+  mothersincome               : z.optional(z.string()),
+  filesfamilycard             : z.instanceof(File)
+                                 .refine((file) => file.size  >0, {message: "Image is required"})
+                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
+                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  filesbirthcertificate       : z.instanceof(File)
+                                 .refine((file) => file.size  >0, {message: "Image is required"})
+                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
+                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  filescertificate            : z.instanceof(File)
+                                 .refine((file) => file.size  >0, {message: "Image is required"})
+                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
+                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  filesphotos                 : z.instanceof(File)
+                                 .refine((file) => file.size  >0, {message: "Image is required"})
+                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
+                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  filespayment                : z.instanceof(File)
+                                 .refine((file) => file.size  >0, {message: "Image is required"})
+                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
+                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
 })

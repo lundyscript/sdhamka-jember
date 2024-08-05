@@ -1,29 +1,22 @@
 "use client"
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { deleteBuyerAction } from "@/actions/buyers"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { toast } from "sonner"
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { LoadingButton } from "@/components/button"
 import { Trash2 } from "lucide-react"
-import { deleteProductAction } from "@/actions/products"
-import { deleteOrdertAction } from "@/actions/orders"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
-import { deleteSpendAction } from "@/actions/spends"
-import { deletePurchaseAction } from "@/actions/purchases"
-import { deleteIngredientAction } from "@/actions/ingredients"
-import { deletePackagingAction } from "@/actions/packages"
-import { deleteEmployeeAction } from "@/actions/employees"
+import { deletePostAction } from "@/actions/posts"
+import { toast } from "sonner"
+import { deleteTeacherAction } from "@/actions/teachers"
 
 export const DeleteModal = ({data, id, name}: {data: string, id: string, name: string}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const deleteDataWithId = () => {
-    if (data === "buyers") {
+    if (data === "posts") {
       startTransition(() => {
-        deleteBuyerAction(id).then((message) => {
+        deletePostAction(id).then((message) => {
           if (message.error) {
             toast.error("Error!",{description: message.error})
           }
@@ -33,11 +26,12 @@ export const DeleteModal = ({data, id, name}: {data: string, id: string, name: s
         })
         document.getElementById("closeDialog")?.click()
         document.getElementById("actionButton")?.click()
-        router.push("/buyers")
+        router.push("/posts")
       })
-    } else if (data === "products") {
+    }
+    if (data === "teachers") {
       startTransition(() => {
-        deleteProductAction(id).then((message) => {
+        deleteTeacherAction(id).then((message) => {
           if (message.error) {
             toast.error("Error!",{description: message.error})
           }
@@ -47,91 +41,7 @@ export const DeleteModal = ({data, id, name}: {data: string, id: string, name: s
         })
         document.getElementById("closeDialog")?.click()
         document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "orders") {
-      startTransition(() => {
-        deleteOrdertAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "spends") {
-      startTransition(() => {
-        deleteSpendAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "purchases") {
-      startTransition(() => {
-        deletePurchaseAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "ingredients") {
-      startTransition(() => {
-        deleteIngredientAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "packaging") {
-      startTransition(() => {
-        deletePackagingAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
-      })
-    } else if (data === "employees") {
-      startTransition(() => {
-        deleteEmployeeAction(id).then((message) => {
-          if (message.error) {
-            toast.error("Error!",{description: message.error})
-          }
-          if (message.success) {
-            toast.success("Success!",{description: message.success})
-          }
-        })
-        document.getElementById("closeDialog")?.click()
-        document.getElementById("actionButton")?.click()
-        router.refresh()
+        router.push("/teachers")
       })
     }
   }

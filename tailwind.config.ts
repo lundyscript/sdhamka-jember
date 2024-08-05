@@ -10,6 +10,10 @@ const config = {
 	],
   prefix: "",
   theme: {
+    fontFamily: {
+      inconsolata: ["inconsolata", "mono"],
+      RobotoCondensed : ["RobotoCondensed"]
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -59,6 +63,7 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -67,10 +72,40 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "grid": {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "grid": "grid 15s linear infinite",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        shimmer: "shimmer 8s infinite",
       },
     },
   },

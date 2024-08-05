@@ -1,7 +1,7 @@
 "use client"
 import { UserRole } from "@prisma/client"
-import { adminAction } from "@/actions/admin"
 import { RoleGate } from "@/components/utils/role-gate"
+import { adminAction } from "@/actions/admin"
 import { Success } from "@/components/notification"
 import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/utils/heading"
@@ -29,7 +29,7 @@ const AdminPage = () => {
     })
   }
   return (
-    <>
+    <RoleGate allowedRole="ADMIN">
       <Heading title="Admin." description="Lihat hak akses pengguna aplikasi."/>
       <Separator orientation="horizontal" className="my-4"/>
       <div className="flex flex-col gap-4 lg:w-96 mx-auto justify-center">
@@ -45,7 +45,7 @@ const AdminPage = () => {
           <Button onClick={onServerActionClick}>Click to test!</Button>
         </div>
       </div>
-    </>
+    </RoleGate>
   )
 }
 

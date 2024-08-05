@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useTheme } from "next-themes"
 import { useSearchParams } from "next/navigation"
 import { useCurrentUser } from "@/hooks/use-current-user"
+import { useCurrentRole } from "@/hooks/use-current-role"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { signIn } from "next-auth/react"
 import { logoutAction } from "@/actions/logout"
@@ -13,16 +14,17 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { DeleteModal } from "@/components/utils/modal"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Sun, Moon, Laptop, UserRound, LogOut, Settings, ShieldQuestion, ServerCog, MonitorSmartphone, RotateCw, Plus, ArrowDownToLine, GanttChart, Pencil, Search } from "lucide-react"
+import { Sun, Moon, Laptop, UserRound, LogOut, Settings, ShieldQuestion, ServerCog, MonitorSmartphone, Plus, ArrowDownToLine, Pencil, Loader } from "lucide-react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub } from "react-icons/fa"
+import { useEffect, useState } from "react"
 
 export const ActionButton = ({data, id, name}: {data: string, id: string, name: string}) => {
   return (
-    <div className="flex flex-row">
+    <>
       <Link href={`/${data}/edit/${id}`}><Button variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Pencil size={17}/></Button></Link>
       <DeleteModal data={data} id={id} name={name}/>
-    </div>
+    </>
   )
 }
 
@@ -65,14 +67,6 @@ export const DownloadButton = ({data, label}: {data: any, label: string}) => {
   )
 }
 
-export const CancelButton = ({href}: {href: string}) => {
-  return ( 
-    <Button variant={"secondary"} asChild className="font-medium w-full">
-      <Link href={href}>Batal</Link>
-    </Button>
-  );
-}
-
 export const SaveButton = () => {
   return (
     <Button type="submit" variant={"default"} className="font-medium w-full">Simpan</Button>
@@ -111,7 +105,7 @@ export const LogoutButton = ({children}: {children?: React.ReactNode}) => {
 export const LoadingButton = () => {
   return (
     <Button disabled variant={"default"} className="w-full">
-      <RotateCw size={17} className="mr-2 animate-spin" />
+      <Loader size={17} className="mr-2 animate-spin"/>
       Loading
     </Button>
   )
@@ -148,6 +142,7 @@ export const SocialButton = () => {
 
 export const UserButton = () => {
   const user = useCurrentUser()
+  const role = useCurrentRole()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="hover:cursor-pointer">
@@ -157,10 +152,18 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <Link href="/server"><DropdownMenuItem className="gap-2"><ServerCog size={17}/>Server</DropdownMenuItem></Link>
-        <Link href="/client"><DropdownMenuItem className="gap-2"><MonitorSmartphone size={17}/>Client</DropdownMenuItem></Link>
-        <Link href="/admin"><DropdownMenuItem className="gap-2"><ShieldQuestion size={17}/>Admin</DropdownMenuItem></Link>
-        <Link href="/settings"><DropdownMenuItem className="gap-2"><Settings size={17}/>Settings</DropdownMenuItem></Link>
+        {role === "ADMIN" ?
+          <>
+            <Link href="/server"><DropdownMenuItem className="gap-2"><ServerCog size={17}/>Server</DropdownMenuItem></Link>
+            <Link href="/client"><DropdownMenuItem className="gap-2"><MonitorSmartphone size={17}/>Client</DropdownMenuItem></Link>
+            <Link href="/admin"><DropdownMenuItem className="gap-2"><ShieldQuestion size={17}/>Admin</DropdownMenuItem></Link>
+            <Link href="/settings"><DropdownMenuItem className="gap-2"><Settings size={17}/>Settings</DropdownMenuItem></Link>
+          </>
+        :
+          <>
+            <Link href="/settings"><DropdownMenuItem className="gap-2"><Settings size={17}/>Settings</DropdownMenuItem></Link>
+          </>
+        }
         <DropdownMenuSeparator />
         <LogoutButton>
           <DropdownMenuItem className="gap-2 text-red-700 focus:bg-destructive/20 focus:text-red-700"><LogOut size={17}/>Logout</DropdownMenuItem>
@@ -175,7 +178,7 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="h-10 w-10 rounded-full focus-visible:ring-offset-0 focus-visible:ring-0">
+        <Button variant="ghost" size="icon" className="h-10 w-10 focus-visible:ring-offset-0 focus-visible:ring-0">
           <Sun size={22} className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon size={21} className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
@@ -196,5 +199,18 @@ export function ModeToggle() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+export const DarkLightToggle = () => {
+  const { theme, setTheme } = useTheme()
+  const [hasMounted, setHasMounted] = useState(false)
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+  return (
+    <Button variant={"ghost"} size={"icon"} onClick={() => setTheme(theme == "light" ? "dark" : "light")}>
+      {hasMounted && theme == "light" ? <Moon size={19}/> : <Sun size={19}/> }
+    </Button>
   )
 }

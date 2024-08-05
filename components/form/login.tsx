@@ -54,8 +54,8 @@ export const LoginForm = () => {
   return ( 
     <Card className="lg:w-80">
       <CardHeader>
-        <CardTitle className="text-xl">Hello, admin!</CardTitle>
-        <CardDescription>Login with your admin credentials.</CardDescription>
+        <CardTitle className="text-xl">Welcome back!</CardTitle>
+        <CardDescription>Login with your credentials.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -106,11 +106,11 @@ export const LoginForm = () => {
         </form>
       </Form>
     </CardContent>
-    <CardFooter>
-      {/* <SocialButton/> */}
+    {/* <CardFooter>
+      <SocialButton/>
       <LinkButton description="Forgot your password?" label="Reset" href="/auth/reset"/>
-      {/* <LinkButton description="Don't have an account?" label="Register" href="/auth/register"/> */}
-    </CardFooter>
+      <LinkButton description="Don't have an account?" label="Register" href="/auth/register"/>
+    </CardFooter> */}
   </Card>
   )
 }

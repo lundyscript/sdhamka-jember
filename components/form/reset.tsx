@@ -38,7 +38,7 @@ export const ResetForm = () => {
   return ( 
     <Card className="lg:w-80">
       <CardHeader>
-        <CardTitle className="text-xl">Hello, admin!</CardTitle>
+        <CardTitle className="text-xl">Hello, there!</CardTitle>
         <CardDescription>Enter the email associated with your account and we&apos;ll send an email with instructions to reset your password.</CardDescription>
       </CardHeader>
       <CardContent>

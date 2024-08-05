@@ -85,9 +85,9 @@ export const RegisterForm = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
+      {/* <CardFooter>
         <LinkButton description="Already have an account?" label="Login" href="/auth/login"/>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }

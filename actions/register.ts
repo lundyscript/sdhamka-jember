@@ -18,9 +18,9 @@ export const registerAction = async (values: z.infer<typeof RegisterSchema>) => 
     return { error: "Email already in use!" }
   }
   await db.user.create({
-    data: {name, email, password: hashedPassword}
+    data: {name, email, emailVerified: new Date().toISOString(), password: hashedPassword}
   })
-  const verficationToken = await generateVerificationToken(email)
-  await sendVerificationEmail(verficationToken.email, verficationToken.token)
+  // const verficationToken = await generateVerificationToken(email)
+  // await sendVerificationEmail(verficationToken.email, verficationToken.token)
   return { success: "Congratulations! We've sent you a verification email, please check your inbox and follow the instructions to verify you account. Thank you for join with us." }
 }

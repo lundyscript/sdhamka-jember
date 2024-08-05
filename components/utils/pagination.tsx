@@ -5,7 +5,7 @@ import { generatePagination } from "@/lib/utils"
 import { ChevronRight, ChevronLeft } from "lucide-react"
 import clsx from "clsx"
 
-const Pagination = ({totalPages, totalData}:{totalPages: number, totalData: number}) => {
+const Pagination = ({totalPages, data, totalData}:{totalPages: number, data:number, totalData: number}) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get("page")) || 1
@@ -58,8 +58,9 @@ const Pagination = ({totalPages, totalData}:{totalPages: number, totalData: numb
 
   return (
     <div className="flex items-center justify-between">
-      <p className="text-xs pr-6">Total : {totalData} items</p>
+      <p className="text-xs pr-6">{data} of {totalData} items</p>
       <div className="inline-flex items-center ">
+        <p className="text-xs pr-6">{currentPage} of {totalPages} pages</p>
         <PaginationArrow direction="left" href={createPageURL(currentPage-1)} isDisabled={currentPage<=1}/>
         <div className="flex -space-s-px gap-1">
           {allPages.map((page,index) => {
