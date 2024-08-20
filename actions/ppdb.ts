@@ -76,16 +76,20 @@ export const newPPDBAction = async (formData: FormData) => {
     await fs.writeFileSync(filePath, buffer)
     imagePath5 = `uploads/${rdm}_${filespayment.name}`
   }
+  const registernumber = v4().replaceAll("-","").substring(0, 8)
+  const status = "Terdaftar"
+
   try {
     await db.ppdb.create({
       data: { 
+        registernumber,
+        status,
         fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,
         filesfamilycard:imagePath1,
         filesbirthcertificate:imagePath2,
         filescertificate:imagePath3,
         filesphotos:imagePath4,
         filespayment:imagePath5,
-        status:'Terdaftar'
       },
     })
     return { success: "Data PPDB baru berhasil ditambahkan" }
