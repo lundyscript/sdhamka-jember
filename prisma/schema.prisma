@@ -29,7 +29,6 @@ model User {
   password      String?
   role          UserRole @default(USER)
   accounts      Account[]
-  ppdb          PPDB[]
   isTwoFactorEnabled  Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   createdAt     DateTime  @default(now())
@@ -109,6 +108,7 @@ model Teacher {
   position      String
   whatsapp      String
   image         String
+  elearning     Elearning[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -123,9 +123,22 @@ model Posts {
   updatedAt     DateTime  @updatedAt
 }
 
-model PPDB {
+model Elearning {
+  id            String    @id @default(cuid())
+  teacherId     String
+  classroom     String
+  subject       String
+  body          String
+  image         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+}
+
+model Ppdb {
   id                          String    @id @default(cuid())
-  userId                      String
+  status                      String
+  registernumber              String
   fullname                    String
   nickname                    String
   numberbirthcertificate      String
@@ -134,7 +147,6 @@ model PPDB {
   childnumber                 String
   siblings                    String
   placeofbirth                String
-  dateofbirth                 DateTime
   address                     String
   livewith                    String
   childstatus                 String
@@ -144,7 +156,6 @@ model PPDB {
   fathersname                 String
   fathersnumber               String
   fathersplaceofbirth         String
-  fathersdateofbirth          DateTime
   fathersjob                  String
   fathersnameoftheagency      String?
   fathersaddressoftheagency   String?
@@ -153,7 +164,6 @@ model PPDB {
   mothersname                 String
   mothersnumber               String
   mothersplaceofbirth         String
-  mothersdateofbirth          DateTime
   mothersjob                  String
   mothersnameoftheagency      String?
   mothersaddressoftheagency   String?
@@ -166,7 +176,4 @@ model PPDB {
   filespayment                String
   createdAt                   DateTime  @default(now())
   updatedAt                   DateTime  @updatedAt
-  user                        User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
 }

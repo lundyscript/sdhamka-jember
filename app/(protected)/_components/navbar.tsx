@@ -1,13 +1,11 @@
 "use client"
-import { useCurrentRole } from "@/hooks/use-current-role"
 import Link from "next/link"
 import { NavigationMenuLink, NavigationMenuItem, NavigationMenuList, NavigationMenu } from "@/components/ui/navigation-menu"
 import { School } from "lucide-react"
-import { DarkLightToggle, ModeToggle, UserButton } from "@/components/button"
+import { DarkLightToggle, UserButton } from "@/components/button"
 import { ToggleGroup } from "@/components/ui/toggle-group"
 
 export default function NavbarComponent() {
-  const role = useCurrentRole()
   return (
     <header className="flex h-16 w-full shrink-0 items-center px-4 md:px-6 border-b fixed z-10 backdrop-blur-sm bg-background/50 shadow-sm font-RobotoCondensed text-[15px] tracking-wider">
       <div className="mr-6 hidden lg:flex">
@@ -17,55 +15,41 @@ export default function NavbarComponent() {
       </div>
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
-          {role === "ADMIN" ?
-            <>
-              <NavigationMenuItem>
-                <Link href="/profiles" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    PROFIL
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/teachers" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    GURU
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/posts" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    INFORMASI
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/users" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    AKUN
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/ppdb" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    PPDB
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </>
-          :
-            <>
-              <NavigationMenuItem>
-                <Link href="/ppdb" legacyBehavior passHref>
-                  <NavigationMenuLink className="uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                    PPDB
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </>
-          }
+          <NavigationMenuItem>
+            <Link href="/profiles" legacyBehavior passHref>
+              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
+                PROFIL
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/teachers" legacyBehavior passHref>
+              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
+                GURU
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/posts" legacyBehavior passHref>
+              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
+                INFORMASI
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/subjects" legacyBehavior passHref>
+              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
+                E-LEARNING
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/adminppdb" legacyBehavior passHref>
+              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
+                PPDB
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <div className="ml-auto">

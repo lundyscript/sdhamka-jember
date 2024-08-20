@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { zfd } from "zod-form-data";
 import { UserRole } from "@prisma/client"
 
 export const SettingsSchema = z.object({
@@ -68,7 +69,10 @@ export const ProfilesSchema = z.object({
   title: z.string(),
   subtitle: z.string(),
   body: z.string(),
-  image: z.string()
+  image: z.instanceof(File)
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional()
 })
 
 export const TeacherSchema = z.object({
@@ -77,14 +81,31 @@ export const TeacherSchema = z.object({
   subjects: z.string(),
   position: z.string(),
   whatsapp: z.string(),
-  image: z.string()
+  image: z.instanceof(File)
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional()
 })
 
 export const PostsSchema = z.object({
   category: z.string(),
   title: z.string(),
   body: z.string(),
-  image: z.string()
+  image: z.instanceof(File)
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional()
+})
+
+export const ElearningSchema = z.object({
+  teacherId: z.string(),
+  classroom: z.string(),
+  subject: z.string().toUpperCase(),
+  body: z.string(),
+  image: z.instanceof(File)
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional()
 })
 
 export const PPDBSchema = z.object({
@@ -96,49 +117,41 @@ export const PPDBSchema = z.object({
   childnumber                 : z.string(),
   siblings                    : z.string(),
   placeofbirth                : z.string(),
-  dateofbirth                 : z.date(),
   address                     : z.string(),
   livewith                    : z.string(),
   childstatus                 : z.string(),
   nisn                        : z.string(),
   kindergarten                : z.string(),
   kindergartenaddress         : z.string(),
-  fathersname                 : z.string(),
+  fathersname                 : z.string().toUpperCase(),
   fathersnumber               : z.string(),
   fathersplaceofbirth         : z.string(),
-  fathersdateofbirth          : z.date(),
   fathersjob                  : z.string(),
   fathersnameoftheagency      : z.optional(z.string()),
   fathersaddressoftheagency   : z.optional(z.string()),
   fatherslasteducation        : z.string(),
   fathersincome               : z.string(),
-  mothersname                 : z.string(),
+  mothersname                 : z.string().toUpperCase(),
   mothersnumber               : z.string(),
   mothersplaceofbirth         : z.string(),
-  mothersdateofbirth          : z.date(),
   mothersjob                  : z.string(),
   mothersnameoftheagency      : z.optional(z.string()),
   mothersaddressoftheagency   : z.optional(z.string()),
   motherslasteducation        : z.string(),
   mothersincome               : z.optional(z.string()),
   filesfamilycard             : z.instanceof(File)
-                                 .refine((file) => file.size  >0, {message: "Image is required"})
-                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
-                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
   filesbirthcertificate       : z.instanceof(File)
-                                 .refine((file) => file.size  >0, {message: "Image is required"})
-                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
-                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
   filescertificate            : z.instanceof(File)
-                                 .refine((file) => file.size  >0, {message: "Image is required"})
-                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
-                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
   filesphotos                 : z.instanceof(File)
-                                 .refine((file) => file.size  >0, {message: "Image is required"})
-                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
-                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
   filespayment                : z.instanceof(File)
-                                 .refine((file) => file.size  >0, {message: "Image is required"})
-                                 .refine((file) => file.size === 0 || file.type.startsWith("image/"), {message: "Only images are allowed"})
-                                 .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
 })

@@ -7,7 +7,6 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import ShinyButton from "@/components/magicui/shiny-button";
 import Image from "next/image"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible"
 
 export default function NavbarComponent() {
   return (
@@ -25,9 +24,10 @@ export default function NavbarComponent() {
             <p>KALIWATES JEMBER</p>
           </div>
         </Link>
-        <Link href="/profile" className="hover:underline hover:underline-offset-4">PROFIL</Link>
-        <Link href="#teachers" scroll={true} className="hover:underline hover:underline-offset-4">GURU</Link>
-        <Link href="/news" className="hover:underline hover:underline-offset-4">INFORMASI</Link>
+        <Link href="/profile" className="font-medium hover:underline hover:underline-offset-4">PROFIL</Link>
+        <Link href="/employees" className="font-medium hover:underline hover:underline-offset-4">GURU</Link>
+        <Link href="/news" className="font-medium hover:underline hover:underline-offset-4">INFORMASI</Link>
+        <Link href="/elearning" className="font-medium hover:underline hover:underline-offset-4">E-LEARNING</Link>
         <Link href="/ppdb"><ShinyButton text="PPDB ONLINE"/></Link>
       </div>
       <Sheet>
@@ -65,8 +65,9 @@ export default function NavbarComponent() {
                 </Link>
               </div>
               <Link href="/profile" className="text-xl font-bold tracking-tight">PROFIL</Link>
-              <Link href="/profile" className="text-xl font-bold tracking-tight">GURU</Link>
+              <Link href="/employees" className="text-xl font-bold tracking-tight">GURU</Link>
               <Link href="/news" className="text-xl font-bold tracking-tight">INFORMASI</Link>
+              <Link href="/elearning" className="text-xl font-bold tracking-tight">E-LEARNING</Link>
               <Link href="/ppdb" className="text-xl font-bold tracking-tight">PPDB ONLINE</Link>
             </div>
             <div>

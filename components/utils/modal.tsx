@@ -9,6 +9,7 @@ import { Trash2 } from "lucide-react"
 import { deletePostAction } from "@/actions/posts"
 import { toast } from "sonner"
 import { deleteTeacherAction } from "@/actions/teachers"
+import { deleteSubjectAction } from "@/actions/elearning"
 
 export const DeleteModal = ({data, id, name}: {data: string, id: string, name: string}) => {
   const router = useRouter()
@@ -42,6 +43,21 @@ export const DeleteModal = ({data, id, name}: {data: string, id: string, name: s
         document.getElementById("closeDialog")?.click()
         document.getElementById("actionButton")?.click()
         router.push("/teachers")
+      })
+    }
+    if (data === "subjects") {
+      startTransition(() => {
+        deleteSubjectAction(id).then((message) => {
+          if (message.error) {
+            toast.error("Error!",{description: message.error})
+          }
+          if (message.success) {
+            toast.success("Success!",{description: message.success})
+          }
+        })
+        document.getElementById("closeDialog")?.click()
+        document.getElementById("actionButton")?.click()
+        router.push("/subjects")
       })
     }
   }

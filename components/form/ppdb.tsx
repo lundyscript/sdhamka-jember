@@ -1,13 +1,13 @@
 "use client"
 import * as z from "zod"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PPDBSchema } from "@/schemas"
 import { Form, FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { LoadingButton, SaveButton } from "@/components/button"
+import { LoadingButton } from "@/components/button"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -18,23 +18,77 @@ import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { newPPDBAction } from "@/actions/ppdb"
+import { toast } from "sonner"
+import Image from "next/image"
 
 
 export const NewPPDBForm = () => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [preview1, setPreview1] = useState("")
+  const [preview2, setPreview2] = useState("")
+  const [preview3, setPreview3] = useState("")
+  const [preview4, setPreview4] = useState("")
+  const [preview5, setPreview5] = useState("")
   const form = useForm<z.infer<typeof PPDBSchema>>({
     resolver:zodResolver(PPDBSchema)
   })
 
-  const checkStudent = form.formState.errors.fullname && form.formState.errors.nickname && form.formState.errors.numberbirthcertificate && form.formState.errors.nik && form.formState.errors.gender && form.formState.errors.childnumber && form.formState.errors.siblings && form.formState.errors.placeofbirth && form.formState.errors.dateofbirth && form.formState.errors.address && form.formState.errors.livewith && form.formState.errors.childstatus && form.formState.errors.nisn && form.formState.errors.kindergarten && form.formState.errors.kindergartenaddress
-  const checkParents = form.formState.errors.fathersname && form.formState.errors.fathersnumber && form.formState.errors.fathersplaceofbirth && form.formState.errors.fathersdateofbirth && form.formState.errors.fathersjob && form.formState.errors.fatherslasteducation && form.formState.errors.fathersincome && form.formState.errors.mothersname && form.formState.errors.mothersnumber && form.formState.errors.mothersplaceofbirth && form.formState.errors.mothersdateofbirth && form.formState.errors.mothersjob && form.formState.errors.motherslasteducation
+  const checkStudent = form.formState.errors.fullname && form.formState.errors.nickname && form.formState.errors.numberbirthcertificate && form.formState.errors.nik && form.formState.errors.gender && form.formState.errors.childnumber && form.formState.errors.siblings && form.formState.errors.placeofbirth && form.formState.errors.address && form.formState.errors.livewith && form.formState.errors.childstatus && form.formState.errors.nisn && form.formState.errors.kindergarten && form.formState.errors.kindergartenaddress
+  const checkParents = form.formState.errors.fathersname && form.formState.errors.fathersnumber && form.formState.errors.fathersplaceofbirth && form.formState.errors.fathersjob && form.formState.errors.fatherslasteducation && form.formState.errors.fathersincome && form.formState.errors.mothersname && form.formState.errors.mothersnumber && form.formState.errors.mothersplaceofbirth && form.formState.errors.mothersjob && form.formState.errors.motherslasteducation
   const checkFiles   = form.formState.errors.filesfamilycard && form.formState.errors.filesbirthcertificate && form.formState.errors.filescertificate && form.formState.errors.filesphotos && form.formState.errors.filespayment 
   
   const onSubmit = (values: z.infer<typeof PPDBSchema>) => {
-    console.log(values)
+    const formData = new FormData()
+    values.fullname && formData.append("fullname", values.fullname)
+    values.nickname && formData.append("nickname", values.nickname)
+    values.numberbirthcertificate && formData.append("numberbirthcertificate", values.numberbirthcertificate)
+    values.nik && formData.append("nik", values.nik)
+    values.gender && formData.append("gender", values.gender)
+    values.childnumber && formData.append("childnumber", values.childnumber)
+    values.siblings && formData.append("siblings", values.siblings)
+    values.placeofbirth && formData.append("placeofbirth", values.placeofbirth)
+    values.address && formData.append("address", values.address)
+    values.livewith && formData.append("livewith", values.livewith)
+    values.childstatus && formData.append("childstatus", values.childstatus)
+    values.nisn && formData.append("nisn", values.nisn)
+    values.kindergarten && formData.append("kindergarten", values.kindergarten)
+    values.kindergartenaddress && formData.append("kindergartenaddress", values.kindergartenaddress)
+    values.fathersname && formData.append("fathersname", values.fathersname)
+    values.fathersnumber && formData.append("fathersnumber", values.fathersnumber)
+    values.fathersplaceofbirth && formData.append("fathersplaceofbirth", values.fathersplaceofbirth)
+    values.fathersjob && formData.append("fathersjob", values.fathersjob)
+    values.fathersnameoftheagency && formData.append("fathersnameoftheagency", values.fathersnameoftheagency)
+    values.fathersaddressoftheagency && formData.append("fathersaddressoftheagency", values.fathersaddressoftheagency)
+    values.fatherslasteducation && formData.append("fatherslasteducation", values.fatherslasteducation)
+    values.fathersincome && formData.append("fathersincome", values.fathersincome)
+    values.mothersname && formData.append("mothersname", values.mothersname)
+    values.mothersnumber && formData.append("mothersnumber", values.mothersnumber)
+    values.mothersplaceofbirth && formData.append("mothersplaceofbirth", values.mothersplaceofbirth)
+    values.mothersjob && formData.append("mothersjob", values.mothersjob)
+    values.mothersnameoftheagency && formData.append("mothersnameoftheagency", values.mothersnameoftheagency)
+    values.mothersaddressoftheagency && formData.append("mothersaddressoftheagency", values.mothersaddressoftheagency)
+    values.motherslasteducation && formData.append("motherslasteducation", values.motherslasteducation)
+    values.mothersincome && formData.append("mothersincome", values.mothersincome)
+    values.filesfamilycard && formData.append("filesfamilycard", values.filesfamilycard)
+    values.filesbirthcertificate && formData.append("filesbirthcertificate", values.filesbirthcertificate)
+    values.filescertificate && formData.append("filescertificate", values.filescertificate)
+    values.filesphotos && formData.append("filesphotos", values.filesphotos)
+    values.filespayment && formData.append("filespayment", values.filespayment)
+    startTransition(() => {
+      newPPDBAction(formData).then((message) => {
+        if (message.error) {
+          toast.error("Error!",{description: message.error})
+        }
+        if (message.success) {
+          toast.success("Success!",{description: message.success})
+        }
+      })
+      router.push("/ppdb")
+    })
   }
-
+  
   return (
     <>
       <div className="lg:w-3/5 mx-auto justify-center">
@@ -124,43 +178,7 @@ export const NewPPDBForm = () => {
                       <FormMessage/>
                     </FormItem>
                   )}/>
-                  <FormField control={form.control} name="dateofbirth" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tanggal Lahir <span className="text-red-500">*</span></FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                          <Button
-                            id="date"
-                            variant={"outline"}
-                            size={"sm"}
-                            className={cn(
-                              "h-10 w-full rounded-md justify-start text-left font-normal hover:bg-inherit",
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "dd/MM/yyyy")
-                            ) : (
-                              <span>Tanggal Lahir</span>
-                            )}
-                          </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            captionLayout="dropdown"
-                            selected={field.value}
-                            onSelect={(date) => field.onChange(date as Date)}
-                            fromYear={2000}
-                            toYear={2030}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}/>
+                  
                   <FormField control={form.control} name="address" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Alamat <span className="text-red-500">*</span></FormLabel>
@@ -257,43 +275,7 @@ export const NewPPDBForm = () => {
                       <FormMessage/>
                     </FormItem>
                   )}/>
-                  <FormField control={form.control} name="fathersdateofbirth" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tanggal Lahir <span className="text-red-500">*</span></FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                          <Button
-                            id="date"
-                            variant={"outline"}
-                            size={"sm"}
-                            className={cn(
-                              "h-10 w-full rounded-md justify-start text-left font-normal hover:bg-inherit",
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "dd/MM/yyyy")
-                            ) : (
-                              <span>Tanggal Lahir</span>
-                            )}
-                          </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            captionLayout="dropdown"
-                            selected={field.value}
-                            onSelect={(date) => field.onChange(date as Date)}
-                            fromYear={2000}
-                            toYear={2030}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}/>
+                  
                   <FormField control={form.control} name="fathersjob" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Pekerjaan Ayah <span className="text-red-500">*</span></FormLabel>
@@ -338,12 +320,12 @@ export const NewPPDBForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="ASN">S3/Doktoral</SelectItem>
-                          <SelectItem value="ASN">S2/Magister</SelectItem>
-                          <SelectItem value="ASN">S1/Sarjana</SelectItem>
-                          <SelectItem value="BUMN/BUMD">Diploma</SelectItem>
-                          <SelectItem value="TNI/POLRI">SMA Sederajat</SelectItem>
-                          <SelectItem value="SWASTA">SMP Sederajat</SelectItem>
+                          <SelectItem value="S3/Doktoral">S3/Doktoral</SelectItem>
+                          <SelectItem value="S2/Magister">S2/Magister</SelectItem>
+                          <SelectItem value="S1/Sarjana">S1/Sarjana</SelectItem>
+                          <SelectItem value="Diploma">Diploma</SelectItem>
+                          <SelectItem value="SMA Sederajat">SMA Sederajat</SelectItem>
+                          <SelectItem value="SMP Sederajat">SMP Sederajat</SelectItem>
                           <SelectItem value="SD Sederajat">SD Sederajat</SelectItem>
                         </SelectContent>
                       </Select>
@@ -360,9 +342,10 @@ export const NewPPDBForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Kurang Rp. 3.000.000">Kurang Rp. 3.000.000</SelectItem>
-                          <SelectItem value="Kurang Rp. 5.000.000">Kurang Rp. 5.000.000</SelectItem>
-                          <SelectItem value="Lebih Rp. 5.000.000">Lebih Rp. 5.000.000</SelectItem>
+                          <SelectItem value="Tidak Punya Penghasilan">Tidak Punya Penghasilan</SelectItem>
+                          <SelectItem value="Rp. 1.000.000 s.d. Rp. 3.000.000">Rp. 1.000.000 s.d. Rp. 3.000.000</SelectItem>
+                          <SelectItem value="Rp. 3.000.000 s.d. Rp. 5.000.000">Rp. 3.000.000 s.d. Rp. 5.000.000</SelectItem>
+                          <SelectItem value="Lebih Dari Rp. 5.000.000">Lebih Dari Rp. 5.000.000</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage/>
@@ -391,43 +374,7 @@ export const NewPPDBForm = () => {
                       <FormMessage/>
                     </FormItem>
                   )}/>
-                  <FormField control={form.control} name="mothersdateofbirth" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tanggal Lahir <span className="text-red-500">*</span></FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                          <Button
-                            id="date"
-                            variant={"outline"}
-                            size={"sm"}
-                            className={cn(
-                              "h-10 w-full rounded-md justify-start text-left font-normal hover:bg-inherit",
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {field.value ? (
-                              format(field.value, "dd/MM/yyyy")
-                            ) : (
-                              <span>Tanggal Lahir</span>
-                            )}
-                          </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            captionLayout="dropdown"
-                            selected={field.value}
-                            onSelect={(date) => field.onChange(date as Date)}
-                            fromYear={2000}
-                            toYear={2030}
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}/>
+                  
                   <FormField control={form.control} name="mothersjob" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Pekerjaan Ibu <span className="text-red-500">*</span></FormLabel>
@@ -472,12 +419,12 @@ export const NewPPDBForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="ASN">S3/Doktoral</SelectItem>
-                          <SelectItem value="ASN">S2/Magister</SelectItem>
-                          <SelectItem value="ASN">S1/Sarjana</SelectItem>
-                          <SelectItem value="BUMN/BUMD">Diploma</SelectItem>
-                          <SelectItem value="TNI/POLRI">SMA Sederajat</SelectItem>
-                          <SelectItem value="SWASTA">SMP Sederajat</SelectItem>
+                          <SelectItem value="S3/Doktoral">S3/Doktoral</SelectItem>
+                          <SelectItem value="S2/Magister">S2/Magister</SelectItem>
+                          <SelectItem value="S1/Sarjana">S1/Sarjana</SelectItem>
+                          <SelectItem value="Diploma">Diploma</SelectItem>
+                          <SelectItem value="SMA Sederajat">SMA Sederajat</SelectItem>
+                          <SelectItem value="SMP Sederajat">SMP Sederajat</SelectItem>
                           <SelectItem value="SD Sederajat">SD Sederajat</SelectItem>
                         </SelectContent>
                       </Select>
@@ -512,47 +459,122 @@ export const NewPPDBForm = () => {
                   <CardTitle className="text-xl">Unggah Dokumen Pendukung</CardTitle>
                 </CardHeader>
                 <CardContent className="lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0 space-y-4">
-                  <FormField control={form.control} name="filesfamilycard" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Kartu Keluarga <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input id="picture" type="file" /></FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}/>
-                  <FormField control={form.control} name="filesbirthcertificate" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Akta Kelahiran <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input id="picture" type="file" /></FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}/>
-                  <FormField control={form.control} name="filescertificate" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Ijazah TK <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input id="picture" type="file" /></FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}/>
-                  <FormField control={form.control} name="filesphotos" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Pas Foto <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input id="picture" type="file" /></FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}/>
-                  <FormField control={form.control} name="filespayment" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bukti Pembayaran Pendaftaran <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input id="picture" type="file" /></FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}/>
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="filesfamilycard" render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                        <FormLabel>Kartu Keluarga <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
+                            onChange={ (event) => 
+                              { 
+                                setPreview1(URL.createObjectURL(event.target.files![0]))
+                                onChange(event.target.files && event.target.files[0])
+                              } 
+                            }
+                            disabled={isPending} 
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                    )}/>
+                    <div className={preview1 ? "relative h-96 w-full block" : "hidden"}>
+                      <Image src={preview1 ? preview1 : "/placeholder.svg"} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="filesbirthcertificate" render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                        <FormLabel>Akta Kelahiran <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
+                            onChange={ (event) => 
+                              { 
+                                setPreview2(URL.createObjectURL(event.target.files![0]))
+                                onChange(event.target.files && event.target.files[0])
+                              } 
+                            }
+                            disabled={isPending} 
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                    )}/>
+                    <div className={preview2 ? "relative h-96 w-full block" : "hidden"}>
+                      <Image src={preview2 ? preview2 : "/placeholder.svg"} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="filescertificate" render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                        <FormLabel>Ijazah TK <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
+                            onChange={ (event) => 
+                              { 
+                                setPreview3(URL.createObjectURL(event.target.files![0]))
+                                onChange(event.target.files && event.target.files[0])
+                              } 
+                            }
+                            disabled={isPending} 
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                    )}/>
+                    <div className={preview3 ? "relative h-96 w-full block" : "hidden"}>
+                      <Image src={preview3 ? preview3 : "/placeholder.svg"} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="filesphotos" render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                        <FormLabel>Pas Foto <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
+                            onChange={ (event) => 
+                              { 
+                                setPreview4(URL.createObjectURL(event.target.files![0]))
+                                onChange(event.target.files && event.target.files[0])
+                              } 
+                            }
+                            disabled={isPending} 
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                    )}/>
+                    <div className={preview4 ? "relative h-96 w-full block" : "hidden"}>
+                      <Image src={preview4 ? preview4 : "/placeholder.svg"} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <FormField control={form.control} name="filespayment" render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                        <FormLabel>Bukti Pembayaran Pendaftaran <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
+                            onChange={ (event) => 
+                              { 
+                                setPreview5(URL.createObjectURL(event.target.files![0]))
+                                onChange(event.target.files && event.target.files[0])
+                              } 
+                            }
+                            disabled={isPending} 
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                    )}/>
+                    <div className={preview5 ? "relative h-96 w-full block" : "hidden"}>
+                      <Image src={preview5 ? preview5 : "/placeholder.svg"} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+                    </div>
+                  </div>
                   <div></div>
                   <div className="w-fit">
                     {isPending ? 
                       <LoadingButton/>
                     :
-                      <SaveButton/>
+                      <Button type="submit" variant={"default"} className="font-medium w-full">Daftar</Button>
                     }
                   </div>
                 </CardContent>

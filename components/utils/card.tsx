@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
+import Image from "next/image";
 import { getAllTeachersData } from "@/data/teachers";
 
-export const MarqueeDemo = async () => {
+export const MarqueeCard = async () => {
   const teachers = await getAllTeachersData()
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
@@ -12,14 +12,14 @@ export const MarqueeDemo = async () => {
           <div key={teacher.id}>
             <figure
               className={cn(
-                "relative w-56 lg:w-80 rounded-lg cursor-pointer overflow-hidden border p-4 space-y-2",
+                "relative w-56 lg:w-80 rounded-lg cursor-pointer overflow-hidden border p-4 space-y-4",
                 // light styles
                 "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
                 // dark styles
                 "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
               )}
             >
-              <img className="rounded-md" alt="" src={teacher.image ? teacher.image : "/placeholder.svg"} />
+              <Image src={teacher.image ? `/${teacher.image}` : "/placeholder.svg"} alt={teacher.name ? teacher.name : "Employee"} width={0} height={0} sizes="100vw" className="w-full h-auto rounded-md overflow-hidden object-cover object-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-md" />
               <figcaption className="text-lg font-semibold text-primary leading-5">
                 {teacher.name}
                 <p className="text-base text-muted-foreground md:text-sm/relaxed lg:text-md/relaxed xl:text-lg/relaxed">{teacher.position}</p>

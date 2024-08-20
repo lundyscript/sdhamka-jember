@@ -1,17 +1,34 @@
 "use server"
-import * as z from "zod"
+import fs from "fs"
+import { v4 } from "uuid";
 import { db } from "@/lib/db"
 import { PostsSchema } from "@/schemas"
-export const newPostAction = async (values: z.infer<typeof PostsSchema>) => {
-  const validatedFields = PostsSchema.safeParse(values)
-  if(!validatedFields.success){
+import { getPostById } from "@/data/posts";
+
+export const newPostAction = async (formData:FormData) => {
+  const validatedFields = PostsSchema.safeParse(
+    Object.fromEntries(formData.entries())
+  )
+  if (!validatedFields.success) {
     return { error: "Invalid fields!" }
   }
+  const { category, title, body, image } = validatedFields.data
+  let imagePath
+  if (!image || image.size <= 0) {
+    imagePath = ""
+  } else {
+    const rdm = v4()
+    const filePath = `./public/uploads/${rdm}_${image.name}`
+    const file = formData.get("image") as File
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = new Uint8Array(arrayBuffer)
+    await fs.writeFileSync(filePath, buffer)
+    imagePath = `uploads/${rdm}_${image.name}`
+  }
   try {
-    const { category, title, body, image } = validatedFields.data
     await db.posts.create({
       data: { 
-        category, title, body , image
+        category, title, body , image:imagePath
       },
     })
     return { success: "Data berita baru berhasil ditambahkan" }
@@ -20,20 +37,35 @@ export const newPostAction = async (values: z.infer<typeof PostsSchema>) => {
   }
 }
 
-export const updatePostAction = async (id:string, values: z.infer<typeof PostsSchema>) => {
-  const validatedFields = PostsSchema.safeParse(values)
-  if(!validatedFields.success){
-    return { error : "Invalid fields!" }
+export const updatePostAction = async (id:string, formData:FormData) => {
+  const validatedFields = PostsSchema.safeParse(
+    Object.fromEntries(formData.entries())
+  )
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" }
+  }
+  const prevData = await getPostById(id)
+  if(!prevData) {
+    return { error: "Data not found!" }
+  }
+  const { category, title, body, image } = validatedFields.data
+  let imagePath
+  if (!image || image.size <= 0) {
+    imagePath = prevData.image
+  } else {
+    if (prevData.image) await fs.rmSync(`./public/${prevData.image}`)
+    const rdm = v4()
+    const filePath = `./public/uploads/${rdm}_${image.name}`
+    const file = formData.get("image") as File
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = new Uint8Array(arrayBuffer)
+    await fs.writeFileSync(filePath, buffer)
+    imagePath = `uploads/${rdm}_${image.name}`
   }
   try { 
     await db.posts.update({
-      data:{
-        category: validatedFields.data.category,
-        title: validatedFields.data.title,
-        body: validatedFields.data.body,
-        image: validatedFields.data.image
-      },
-      where:{id}
+      data: { category, title, body, image:imagePath },
+      where: {id}
     })
     return { success: "Data berita berhasil diubah!" }
   } catch (error) {
@@ -42,6 +74,12 @@ export const updatePostAction = async (id:string, values: z.infer<typeof PostsSc
 }
 
 export const deletePostAction = async (id:string) => {
+  const prevData = await getPostById(id)
+  if(!prevData?.image) {
+    return { error: "Data not found!" }
+  } else {
+    await fs.rmSync(`./public/${prevData.image}`)
+  }
   try { 
     await db.posts.delete({
       where:{id}

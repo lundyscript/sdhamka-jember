@@ -1,21 +1,21 @@
 "use client"
 import * as z from "zod"
 import type { Profiles } from "@prisma/client"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ProfilesSchema } from "@/schemas"
 import { updateProfileAction } from "@/actions/profiles"
 import { Form, FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { LoadingButton, SaveButton } from "@/components/button"
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/utils/heading"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill"
+import 'react-quill/dist/quill.snow.css'
+import Image from "next/image"
 
 interface UpdateProfileFormProps {
   initialData: Profiles
@@ -24,13 +24,26 @@ interface UpdateProfileFormProps {
 export const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({initialData}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [preview, setPreview] = useState("")
   const form = useForm<z.infer<typeof ProfilesSchema>>({
     resolver:zodResolver(ProfilesSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      section: initialData.section,
+      title: initialData.title,
+      subtitle: initialData.subtitle,
+      body: initialData.body
+    }
   })
+  
   const onSubmit = (values: z.infer<typeof ProfilesSchema>) => {
+    const formData = new FormData()
+    values.section && formData.append("section", values.section)
+    values.title && formData.append("title", values.title)
+    values.subtitle && formData.append("subtitle", values.subtitle)
+    values.body && formData.append("body", values.body)
+    values.image && formData.append("image", values.image)
     startTransition(() => {
-      updateProfileAction(initialData.id, values).then((message) => {
+      updateProfileAction(initialData.id, formData).then((message) => {
         if (message.error) {
           toast.error("Error!",{description: message.error})
         }
@@ -51,6 +64,7 @@ export const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({initialData
       matchVisual: false,
     }
   };
+  
   return (
     <>
       <Heading title="Ubah Profil Sekolah." description="Isikan data profil sekolah dengan benar."/>
@@ -58,6 +72,9 @@ export const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({initialData
       <div className="lg:w-3/5 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="relative h-52 w-full">
+              <Image src={preview ? preview : `/${initialData.image}`} alt={initialData.title} layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+            </div>
             <FormField control={form.control} name="section" render={({ field }) => (
               <FormItem>
                 <FormLabel>Section</FormLabel>
@@ -65,10 +82,20 @@ export const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({initialData
                 <FormMessage/>
               </FormItem>
             )}/>
-            <FormField control={form.control} name="image" render={({ field }) => (
+            <FormField control={form.control} name="image" render={({ field: { value, onChange, ...fieldProps } }) => (
               <FormItem>
-                <FormLabel>Gambar Cover</FormLabel>
-                <FormControl><Input {...field} disabled={isPending}/></FormControl>
+                <FormLabel>Gambar</FormLabel>
+                <FormControl>
+                  <Input {...fieldProps} type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg" 
+                    onChange={ (event) => 
+                      { 
+                        setPreview(URL.createObjectURL(event.target.files![0]))
+                        onChange(event.target.files && event.target.files[0])
+                      } 
+                    }
+                    disabled={isPending} 
+                  />
+                </FormControl>
                 <FormMessage/>
               </FormItem>
             )}/>

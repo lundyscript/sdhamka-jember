@@ -1,7 +1,7 @@
 "use client"
 import * as z from "zod"
 import type { Posts } from "@prisma/client"
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
+import Image from "next/image"
 
 interface UpdatePostFormProps {
   initialData: Posts
@@ -24,14 +25,19 @@ interface UpdatePostFormProps {
 export const NewPostForm = () => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [preview, setPreview] = useState("")
   const form = useForm<z.infer<typeof PostsSchema>>({
     resolver:zodResolver(PostsSchema),
-    defaultValues:{ category:"", title:"", body:"", image:"" },
+    defaultValues:{ category:"", title:"", body:"" },
   })
   const onSubmit = (values: z.infer<typeof PostsSchema>) => {
-    console.log(values)
+    const formData = new FormData()
+    values.image && formData.append("image", values.image)
+    values.category && formData.append("category", values.category)
+    values.title && formData.append("title", values.title)
+    values.body && formData.append("body", values.body)
     startTransition(() => {
-      newPostAction(values).then((message) => {
+      newPostAction(formData).then((message) => {
         if (message.error) {
           toast.error("Error!",{description: message.error})
         }
@@ -60,10 +66,23 @@ export const NewPostForm = () => {
       <div className="lg:w-3/5 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField control={form.control} name="image" render={({ field }) => (
+            <div className="relative h-52 w-full">
+              <Image src={preview ? preview : "/placeholder.svg"} alt="Gambar Cover" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+            </div>
+            <FormField control={form.control} name="image" render={({ field: { value, onChange, ...fieldProps } }) => (
               <FormItem>
-                <FormLabel>Gambar Cover</FormLabel>
-                <FormControl><Input {...field} disabled={isPending}/></FormControl>
+                <FormLabel>Gambar Sampul</FormLabel>
+                <FormControl>
+                  <Input {...fieldProps} type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg" 
+                    onChange={ (event) => 
+                      { 
+                        setPreview(URL.createObjectURL(event.target.files![0]))
+                        onChange(event.target.files && event.target.files[0])
+                      } 
+                    }
+                    disabled={isPending} 
+                  />
+                </FormControl>
                 <FormMessage/>
               </FormItem>
             )}/>
@@ -123,13 +142,23 @@ export const NewPostForm = () => {
 export const UpdatePostForm: React.FC<UpdatePostFormProps> = ({initialData}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [preview, setPreview] = useState("")
   const form = useForm<z.infer<typeof PostsSchema>>({
     resolver:zodResolver(PostsSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      category: initialData.category,
+      title: initialData.title,
+      body: initialData.body
+    },
   })
   const onSubmit = (values: z.infer<typeof PostsSchema>) => {
+    const formData = new FormData()
+    values.image && formData.append("image", values.image)
+    values.category && formData.append("category", values.category)
+    values.title && formData.append("title", values.title)
+    values.body && formData.append("body", values.body)
     startTransition(() => {
-      updatePostAction(initialData.id, values).then((message) => {
+      updatePostAction(initialData.id, formData).then((message) => {
         if (message.error) {
           toast.error("Error!",{description: message.error})
         }
@@ -157,10 +186,23 @@ export const UpdatePostForm: React.FC<UpdatePostFormProps> = ({initialData}) => 
       <div className="lg:w-3/5 mx-auto justify-center">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField control={form.control} name="image" render={({ field }) => (
+            <div className="relative h-52 w-full">
+              <Image src={preview ? preview : !initialData.image ? "/placeholder.svg" : `/${initialData.image}`} alt="Gambar Cover" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+            </div>
+            <FormField control={form.control} name="image" render={({ field: { value, onChange, ...fieldProps } }) => (
               <FormItem>
-                <FormLabel>Gambar Cover</FormLabel>
-                <FormControl><Input {...field} disabled={isPending}/></FormControl>
+                <FormLabel>Gambar Sampul</FormLabel>
+                <FormControl>
+                  <Input {...fieldProps} type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg" 
+                    onChange={ (event) => 
+                      { 
+                        setPreview(URL.createObjectURL(event.target.files![0]))
+                        onChange(event.target.files && event.target.files[0])
+                      } 
+                    }
+                    disabled={isPending} 
+                  />
+                </FormControl>
                 <FormMessage/>
               </FormItem>
             )}/>

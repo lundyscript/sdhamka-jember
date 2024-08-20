@@ -79,7 +79,7 @@ export const getProfilesAllData = async () => {
   }
 }
 
-export const getProfileById = async (id: string | undefined) => {
+export const getProfileById = async (id: string) => {
   try {
     const profile = await db.profiles.findUnique({
       where: {id},

@@ -11,6 +11,8 @@ export const getAllTeachers = async (query: string, currentPage: number) => {
         OR:[
           {
             name:{ contains: query, mode: "insensitive" },
+          },
+          {
             position:{ contains: query, mode: "insensitive" },
           }
         ]

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { format } from "date-fns"
 import NavbarComponent from '@/components/utils/navbar'
 import Link from "next/link"
@@ -8,6 +7,7 @@ import GridPattern from "@/components/magicui/grid-pattern";
 import { getPostById } from "@/data/posts";
 import BlurFade from "@/components/magicui/blur-fade";
 import { BodyPreview } from "@/components/utils/body";
+import Image from "next/image";
 
 const TopicPage = async ({searchParams}:{searchParams?:{ q?: string }}) => {
   const topic = await getPostById(searchParams?.q)
@@ -19,7 +19,9 @@ const TopicPage = async ({searchParams}:{searchParams?:{ q?: string }}) => {
         <div className="text-justify justify-center leading-loose space-y-3 z-50">
           <Link href={{pathname: '/news'}} className="text-sm font-medium text-muted-foreground transition-all duration-200 ease-out hover:text-primary hover:translate-x-1">&#129120; Back to All News</Link>
           <BlurFade delay={0.25} inView>
-            <img src={topic?.image ? topic.image : "/placeholder.svg"} alt="Topic image" height={300} className="h-[200px] w-full my-8 object-cover transition-all" />
+            <div className="relative my-4 h-52 w-full">
+              <Image src={topic?.image ? `/${topic.image}` : "/placeholder.svg"} alt={topic?.title ? topic.title : "Cover"} layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+            </div>
             <div className="flex flex-row gap-4 items-center">
               <p className="text-sm text-muted-foreground">{topic?.createdAt ? format(topic.createdAt, "dd/MM/yyyy") : ""}</p>
               <Badge variant={"outline"} className="text-sm">{topic?.category}</Badge>
@@ -29,14 +31,15 @@ const TopicPage = async ({searchParams}:{searchParams?:{ q?: string }}) => {
           </BlurFade>
         </div>
       </div>
-        <GridPattern
-          x={-1}
-          y={-1}
-          strokeDasharray={"4 2"}
-          className={cn(
-            "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-          )}
-        />
+      <GridPattern
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
+        className={cn(
+          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "-z-10"
+        )}
+      />
       </section>
     </>
   )

@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { getAllPosts, getFourPosts } from "@/data/posts";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 export const BentoForHomePage = async () => {
     const news = await getFourPosts()
@@ -22,7 +21,9 @@ export const BentoForHomePage = async () => {
             "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
           )}
         >
-          <div><img src={post.image ? post.image : "/placeholder.svg"} className="absolute rounded-md border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" /></div>
+          <div>
+            <Image src={post.image ? `/${post.image}` : "/placeholder.svg"} alt={post.title} layout="fill" sizes="100vw" priority className="absolute rounded-md object-cover border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
+          </div>
           <div className="z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
             <Link href={{pathname: '/topic', query: { q: post.id }}}>
               <h3 className="text-xl font-semibold text-primary">
@@ -66,7 +67,9 @@ export const BentoForNewsPage = async ({query, currentPage}:{query: string, curr
             "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
           )}
         >
-          <div><img src={post.image ? post.image : "/placeholder.svg"} className="absolute rounded-md border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" /></div>
+          <div>
+            <Image src={post.image ? `/${post.image}` : "/placeholder.svg"} alt={post.title} layout="fill" sizes="100vw" priority className="absolute rounded-md object-cover border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
+          </div>
           <div className="z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
             <Link href={{pathname: '/topic', query: { q: post.id }}}>
               <h3 className="text-xl font-semibold text-primary">
