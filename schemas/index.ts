@@ -100,7 +100,7 @@ export const PostsSchema = z.object({
 export const ElearningSchema = z.object({
   teacherId: z.string(),
   classroom: z.string(),
-  subject: z.string().toUpperCase(),
+  subject: z.string(),
   body: z.string(),
   image: z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
@@ -109,31 +109,35 @@ export const ElearningSchema = z.object({
 })
 
 export const PPDBSchema = z.object({
-  fullname                    : z.string().toUpperCase(),
-  nickname                    : z.string().toUpperCase(),
+  status                      : z.optional(z.string()),
+  fullname                    : z.string(),
+  nickname                    : z.string(),
   numberbirthcertificate      : z.string(),
   nik                         : z.string(),
   gender                      : z.string(),
   childnumber                 : z.string(),
   siblings                    : z.string(),
   placeofbirth                : z.string(),
+  dateofbirth                 : z.coerce.date(),
   address                     : z.string(),
   livewith                    : z.string(),
   childstatus                 : z.string(),
   nisn                        : z.string(),
   kindergarten                : z.string(),
   kindergartenaddress         : z.string(),
-  fathersname                 : z.string().toUpperCase(),
+  fathersname                 : z.string(),
   fathersnumber               : z.string(),
   fathersplaceofbirth         : z.string(),
+  fathersdateofbirth          : z.coerce.date(),
   fathersjob                  : z.string(),
   fathersnameoftheagency      : z.optional(z.string()),
   fathersaddressoftheagency   : z.optional(z.string()),
   fatherslasteducation        : z.string(),
   fathersincome               : z.string(),
-  mothersname                 : z.string().toUpperCase(),
+  mothersname                 : z.string(),
   mothersnumber               : z.string(),
   mothersplaceofbirth         : z.string(),
+  mothersdateofbirth          : z.coerce.date(),
   mothersjob                  : z.string(),
   mothersnameoftheagency      : z.optional(z.string()),
   mothersaddressoftheagency   : z.optional(z.string()),
@@ -141,17 +145,22 @@ export const PPDBSchema = z.object({
   mothersincome               : z.optional(z.string()),
   filesfamilycard             : z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
-  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional(),
   filesbirthcertificate       : z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
-  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional(),
   filescertificate            : z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
-  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional(),
   filesphotos                 : z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
-  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional(),
   filespayment                : z.instanceof(File)
   .refine((file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type), {message: "File format must be either jpg, jpeg or png.",})
-  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"}),
+  .refine((file) => file.size < 3000000, {message: "Image must less than 3MB"})
+  .optional(),
 })

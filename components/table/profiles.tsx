@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { format } from "date-fns"
-import { ActionButton } from "@/components/button"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Pagination from "@/components/utils/pagination"
 import { getAllProfiles, getProfilesAllData, getProfilesData, getProfilesPages } from "@/data/profiles"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { Pencil } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 
 export const ProfilesTable = async ({query, currentPage}:{query: string, currentPage: number}) => {
   const profiles = await getAllProfiles(query, currentPage)
@@ -38,13 +38,22 @@ export const ProfilesTable = async ({query, currentPage}:{query: string, current
                 <TableCell className="text-center">{idx+1}</TableCell>
                 <TableCell className="uppercase font-semibold">{profile.section}</TableCell>
                 <TableCell>
-                  <p className="font-semibold">{profile.title}</p>
+                  <p className="font-semibold capitalize">{profile.title}</p>
                   {profile.subtitle}
                 </TableCell>
                 <TableCell><div dangerouslySetInnerHTML={{ __html: profile.body.substring(0,200) + " ..." }} /></TableCell>
                 <TableCell className="text-center">{format(profile.createdAt, "dd/MM/yyyy")}</TableCell>
                 <TableCell className="text-center items-center justify-center">
-                  <Link href={`/profiles/edit/${profile.id}`}><Button variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Pencil size={17}/></Button></Link>
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Link href={`/profiles/edit/${profile.id}`}><Pencil size={17}/></Link></Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Ubah</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </TableCell>
               </TableRow>
             ))}

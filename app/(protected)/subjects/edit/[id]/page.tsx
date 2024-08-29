@@ -1,6 +1,6 @@
 import { UpdateSubjectsForm } from "@/components/form/elearning"
 import { RoleGate } from "@/components/utils/role-gate"
-import { getSubjectById } from "@/data/elearning"
+import { getSubjectById } from "@/data/ensiklopedia"
 import { getAllTeachersData } from "@/data/teachers"
 import { notFound } from "next/navigation"
 const UpdateSubject = async ({params}: {params:{id: string}}) => {

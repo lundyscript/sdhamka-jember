@@ -147,6 +147,7 @@ model Ppdb {
   childnumber                 String
   siblings                    String
   placeofbirth                String
+  dateofbirth                 DateTime
   address                     String
   livewith                    String
   childstatus                 String
@@ -156,6 +157,7 @@ model Ppdb {
   fathersname                 String
   fathersnumber               String
   fathersplaceofbirth         String
+  fathersdateofbirth          DateTime
   fathersjob                  String
   fathersnameoftheagency      String?
   fathersaddressoftheagency   String?
@@ -164,6 +166,7 @@ model Ppdb {
   mothersname                 String
   mothersnumber               String
   mothersplaceofbirth         String
+  mothersdateofbirth          DateTime
   mothersjob                  String
   mothersnameoftheagency      String?
   mothersaddressoftheagency   String?

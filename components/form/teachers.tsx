@@ -186,7 +186,7 @@ export const UpdateTeacherForm: React.FC<UpdateTeacherFormProps> = ({initialData
         <Form {...form}>
         <form className="lg:grid lg:grid-cols-2 lg:gap-8" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="relative w-full">
-              <Image src={preview ? preview : !initialData.image ? "/placeholder.svg" : `/${initialData.image}`} alt="Foto Guru/Karyawan" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+              <Image src={preview ? preview : !initialData.image ? "/placeholder.svg" : `${initialData.image}`} alt="Foto Guru/Karyawan" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
             </div>
             <div className="space-y-6 w-full">
               <FormField control={form.control} name="image" render={({ field: { value, onChange, ...fieldProps } }) => (

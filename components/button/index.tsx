@@ -12,7 +12,7 @@ import { logoutAction } from "@/actions/logout"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
-import { DeleteModal } from "@/components/utils/modal"
+import { DeleteModal } from "@/components/modal/delete"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Sun, Moon, Laptop, UserRound, LogOut, Settings, ShieldQuestion, ServerCog, MonitorSmartphone, Plus, ArrowDownToLine, Pencil, Loader } from "lucide-react"
 import { FcGoogle } from "react-icons/fc"
@@ -21,10 +21,21 @@ import { useEffect, useState } from "react"
 
 export const ActionButton = ({data, id, name}: {data: string, id: string, name: string}) => {
   return (
-    <>
-      <Link href={`/${data}/edit/${id}`}><Button variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Pencil size={17}/></Button></Link>
+    <div className="flex flex-row justify-center items-center text-center">
+      {/* <Link href={`/${data}/edit/${id}`}><Button variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Pencil size={17}/></Button></Link>
+      <DeleteModal data={data} id={id} name={name}/> */}
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Link href={`/${data}/edit/${id}`}><Pencil size={17}/></Link></Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Ubah</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DeleteModal data={data} id={id} name={name}/>
-    </>
+    </div>
   )
 }
 

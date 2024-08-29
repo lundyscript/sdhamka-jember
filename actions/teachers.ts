@@ -1,7 +1,8 @@
 "use server"
 import fs from "fs"
-import { v4 } from "uuid";
+import { v4 } from "uuid"
 import { db } from "@/lib/db"
+import { del, put } from "@vercel/blob"
 import { TeacherSchema } from "@/schemas"
 import { getTeacherById } from "@/data/teachers";
 
@@ -17,13 +18,18 @@ export const newTeacherAction = async (formData:FormData) => {
   if (!image || image.size <= 0) {
     imagePath = ""
   } else {
-    const rdm = v4()
-    const filePath = `./public/uploads/${rdm}_${image.name}`
-    const file = formData.get("image") as File
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = new Uint8Array(arrayBuffer)
-    await fs.writeFileSync(filePath, buffer)
-    imagePath = `uploads/${rdm}_${image.name}`
+    // Local Directory
+    // await fs.rmSync(`./public/${prevData.image}`)
+    // const rdm = v4()
+    // const filePath = `./public/uploads/${rdm}_${image.name}`
+    // const file = formData.get("image") as File
+    // const arrayBuffer = await file.arrayBuffer()
+    // const buffer = new Uint8Array(arrayBuffer)
+    // await fs.writeFileSync(filePath, buffer)
+    // imagePath = `uploads/${rdm}_${image.name}`
+    // Vercel Blob
+    const {url} = await put(image.name, image, {access: "public", multipart: true})
+    imagePath = url
   }
   try {
     await db.teacher.create({
@@ -53,14 +59,19 @@ export const updateTeacherAction = async (id:string, formData:FormData) => {
   if (!image || image.size <= 0) {
     imagePath = prevData.image
   } else {
-    if (prevData.image) await fs.rmSync(`./public/${prevData.image}`)
-    const rdm = v4()
-    const filePath = `./public/uploads/${rdm}_${image.name}`
-    const file = formData.get("image") as File
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = new Uint8Array(arrayBuffer)
-    await fs.writeFileSync(filePath, buffer)
-    imagePath = `uploads/${rdm}_${image.name}`
+    // Local Directory
+    // await fs.rmSync(`./public/${prevData.image}`)
+    // const rdm = v4()
+    // const filePath = `./public/uploads/${rdm}_${image.name}`
+    // const file = formData.get("image") as File
+    // const arrayBuffer = await file.arrayBuffer()
+    // const buffer = new Uint8Array(arrayBuffer)
+    // await fs.writeFileSync(filePath, buffer)
+    // imagePath = `uploads/${rdm}_${image.name}`
+    // Vercel Blob
+    await del(prevData.image)
+    const {url} = await put(image.name, image, {access: "public", multipart: true})
+    imagePath = url
   }
   try { 
     await db.teacher.update({
@@ -78,7 +89,8 @@ export const deleteTeacherAction = async (id:string) => {
   if(!prevData?.image) {
     return { error: "Data not found!" }
   } else {
-    await fs.rmSync(`./public/${prevData.image}`)
+    // await fs.rmSync(`./public/${prevData.image}`)
+    await del(prevData.image)
   }
   try { 
     await db.teacher.delete({

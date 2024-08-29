@@ -24,7 +24,7 @@ export const PostsTable = async ({query, currentPage}:{query: string, currentPag
                 <TableHead className="w-10 text-center">#</TableHead>
                 <TableHead>Kategori</TableHead>
                 <TableHead>Judul Informasi</TableHead>
-                <TableHead className="w-1/3">Isi Informasi</TableHead>
+                <TableHead>Isi Informasi</TableHead>
                 <TableHead className="text-center">Tanggal</TableHead>
                 <TableHead className="text-center">Aksi</TableHead>
               </TableRow>

@@ -1,9 +1,11 @@
 "use server"
 import fs from "fs"
+import { v4 } from "uuid"
 import { db } from "@/lib/db"
+import { del, put } from "@vercel/blob"
 import { ProfilesSchema } from "@/schemas"
 import { getProfileById } from "@/data/profiles"
-import { v4 } from "uuid";
+
 
 export const updateProfileAction = async (id:string, formData:FormData) => {
   const validatedFields = ProfilesSchema.safeParse(
@@ -21,14 +23,21 @@ export const updateProfileAction = async (id:string, formData:FormData) => {
   if (!image || image.size <= 0) {
     imagePath = prevData.image
   } else {
-    await fs.rmSync(`./public/${prevData.image}`)
-    const rdm = v4()
-    const filePath = `./public/uploads/${rdm}_${image.name}`
-    const file = formData.get("image") as File
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = new Uint8Array(arrayBuffer)
-    await fs.writeFileSync(filePath, buffer)
-    imagePath = `uploads/${rdm}_${image.name}`
+    // Local Directory
+    // await fs.rmSync(`./public/${prevData.image}`)
+    // const rdm = v4()
+    // const filePath = `./public/uploads/${rdm}_${image.name}`
+    // const file = formData.get("image") as File
+    // const arrayBuffer = await file.arrayBuffer()
+    // const buffer = new Uint8Array(arrayBuffer)
+    // await fs.writeFileSync(filePath, buffer)
+    // imagePath = `uploads/${rdm}_${image.name}`
+    // Vercel Blob
+    if (prevData.image!='') {
+      await del(prevData.image)
+    }
+    const {url} = await put(image.name, image, {access: "public", multipart: true})
+    imagePath = url
   }
   try {
     await db.profiles.update({

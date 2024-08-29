@@ -3,7 +3,7 @@ import fs from "fs"
 import { v4 } from "uuid";
 import { db } from "@/lib/db"
 import { ElearningSchema } from "@/schemas"
-import { getSubjectById } from "@/data/elearning"
+import { getSubjectById } from "@/data/ensiklopedia"
 
 export const newSubjectsAction = async (formData:FormData) => {
   const validatedFields = ElearningSchema.safeParse(

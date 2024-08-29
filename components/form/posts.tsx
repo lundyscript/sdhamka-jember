@@ -187,7 +187,7 @@ export const UpdatePostForm: React.FC<UpdatePostFormProps> = ({initialData}) => 
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="relative h-52 w-full">
-              <Image src={preview ? preview : !initialData.image ? "/placeholder.svg" : `/${initialData.image}`} alt="Gambar Cover" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
+              <Image src={preview ? preview : !initialData.image ? "/placeholder.svg" : `${initialData.image}`} alt="Gambar Cover" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
             </div>
             <FormField control={form.control} name="image" render={({ field: { value, onChange, ...fieldProps } }) => (
               <FormItem>

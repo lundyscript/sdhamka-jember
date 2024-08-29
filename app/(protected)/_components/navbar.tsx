@@ -39,7 +39,7 @@ export default function NavbarComponent() {
           <NavigationMenuItem>
             <Link href="/subjects" legacyBehavior passHref>
               <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                E-LEARNING
+                Ensiklopedia
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>

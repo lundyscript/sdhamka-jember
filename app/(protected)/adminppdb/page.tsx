@@ -11,7 +11,7 @@ const AdminPPDBPage = async ({searchParams}:{searchParams?:{ query?: string, pag
   return (
     <RoleGate allowedRole="ADMIN">
       <div className="lg:flex lg:flex-row gap-4 pb-4 justify-between">
-        <Heading title="PPDB." description="Penerimaan Peserta Didik baru SD Muhammadiyah Kaliwates Jember."/>
+        <Heading title="Penerimaan Peserta Didik Baru." description="Daftar penerimaan peserta didik baru SD Muhammadiyah Kaliwates Jember."/>
         <Separator orientation="horizontal" className="lg:hidden my-4"/>
         <div className="flex flex-row gap-2">
           <SearchInput label="Cari Data Calon Siswa"/>

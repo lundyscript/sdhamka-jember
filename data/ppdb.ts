@@ -86,7 +86,7 @@ export const getAllPPDBData = async () => {
   }
 }
 
-export const getPPDBById = async (id: string | undefined) => {
+export const getPPDBById = async (id: string) => {
   try {
     const ppdb = await db.ppdb.findUnique({
       where: {id},

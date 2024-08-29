@@ -8,13 +8,13 @@ export const publicRoutes = [
   "/profile",
   "/employees",
   "/news",
-  "/elearning",
-  "/elearning/mapel",
-  "/topic",
+  "/ensiklopedia",
+  "/ensiklopedia/read",
   "/ppdb",
   "/ppdb/register",
+  "/ppdb/success",
+  "/ppdb/error",
   "/auth/new-verification",
-  "/api/topics"
 ]
 
 /**

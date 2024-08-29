@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import BlurFade from '@/components/magicui/blur-fade'
-import { BorderBeam } from '@/components/magicui/border-beam'
 import NavbarComponent from '@/components/utils/navbar'
 import React from 'react'
 import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern"
-import { getAllProfiles } from '@/data/profiles'
 import { cn } from '@/lib/utils'
 import { NewPPDBForm } from '@/components/form/ppdb'
 
-
 const PpdbRegisterPage = async () => {
-  const newsForPPDB = await getAllProfiles("ppdb",1)
   return (
     <>
       <NavbarComponent/>

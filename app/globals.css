@@ -120,6 +120,10 @@
 .quill > * {
   border-color: inherit !important;
   color: inherit !important;
+  text-align: justify !important;
+  font-size: 11pt !important;
+  font-family: inherit !important;
+  line-height: inherit !important;
 }
 .quill > .ql-toolbar {
   border-radius: 6px 6px 0 0;
@@ -128,7 +132,7 @@
   border-radius: 0 0 6px 6px;
 }
 .ql-editor {
-  text-align: justify;
+  text-align: justify !important;
   font-size: 11pt !important;
   font-family: inherit !important;
   line-height: inherit !important;

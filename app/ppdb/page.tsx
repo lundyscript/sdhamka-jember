@@ -29,7 +29,7 @@ const PpdbPage = async () => {
           <BlurFade delay={0.35} inView>
             {newsForPPDB.map((profile, index) => (
               <div key={index+1} className="space-y-4 pb-4">
-                <h1 className="font-bold tracking-tighter sm:text-3xl md:text-4xl">{profile.title}</h1> 
+                <h1 className="font-bold tracking-tighter sm:text-3xl md:text-4xl capitalize">{profile.title}</h1> 
                 <p className="text-muted-foreground lg:text-md xl:text-lg text-justify">{profile.subtitle}</p>
                 <Link href="/ppdb/register" className="group inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" prefetch={false}>
                   Daftar

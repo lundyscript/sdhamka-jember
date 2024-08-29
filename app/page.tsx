@@ -7,14 +7,13 @@ import AnimatedShinyText from "@/components/magicui/animated-shiny-text"
 import { cn } from "@/lib/utils"
 import { ChevronRightIcon } from "lucide-react"
 import { BorderBeam } from "@/components/magicui/border-beam"
-import { MarqueeCard } from "@/components/utils/card"
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 import { getAllProfiles } from "@/data/profiles"
-import { BentoForHomePage } from "@/components/utils/grid"
 import { getHeadmasterData } from "@/data/teachers"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { FaInstagram, FaRegEnvelope, FaWhatsapp } from "react-icons/fa"
+import { BentoForHomePage, TeachersCard } from "@/components/card"
 
 
 const HomePage = async () => {
@@ -49,7 +48,7 @@ const HomePage = async () => {
               <BlurFade delay={0.35} inView>
                 {sejarah.map((profile, index) => (
                   <div key={index} className="relative flex p-4 flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
-                    <Image src={profile.image ? `/${profile.image}` : "/placeholder.svg"} alt={profile.title ? profile.title : "Hero"} width={0} height={0} sizes="100vw" className="w-full h-auto rounded-md aspect-square overflow-hidden object-cover object-center" />
+                    <Image src={profile.image ? `${profile.image}` : "/placeholder.svg"} alt={profile.title ? profile.title : "Hero"} width={0} height={0} sizes="100vw" className="w-full h-auto rounded-md aspect-square overflow-hidden object-cover object-center" />
                     <BorderBeam size={250} duration={12} delay={9} />
                   </div>
                 ))}
@@ -78,7 +77,7 @@ const HomePage = async () => {
               <BlurFade delay={0.25} inView>
                 {visimisi.map((profile, index) => (
                   <div key={index} className="relative flex p-4 flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
-                    <Image src={profile.image ? `/${profile.image}` : "/placeholder.svg"} alt={profile.title ? profile.title : "Hero"} width={0} height={0} sizes="100vw" className="w-full h-auto rounded-md aspect-square overflow-hidden object-cover object-center" />
+                    <Image src={profile.image ? `${profile.image}` : "/placeholder.svg"} alt={profile.title ? profile.title : "Hero"} width={0} height={0} sizes="100vw" className="w-full h-auto rounded-md aspect-square overflow-hidden object-cover object-center" />
                     <BorderBeam size={250} duration={12} delay={9} />
                   </div>
                 ))}
@@ -121,11 +120,13 @@ const HomePage = async () => {
                   Berikut ini adalah profil Guru dan Karyawan di SD Muhammadiyah Kaliwates Jember
                 </p>
               </BlurFade>
-              <BlurFade delay={0.35} inView className="w-full"><MarqueeCard /></BlurFade>
+              <BlurFade delay={0.35} inView className="w-full">
+                <TeachersCard />
+              </BlurFade>
             </div>
           </section>
           <section className="w-full py-20 lg:py-28">
-            <div className="container flex flex-col items-center max-w-4xl px-4 md:px-6 text-center space-y-6">
+            <div className="container flex flex-col items-center max-w-4xl md:w-2xl px-4 md:px-6 text-center space-y-6">
               <BlurFade delay={0.25} inView>
                 <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
                   Informasi Sekolah

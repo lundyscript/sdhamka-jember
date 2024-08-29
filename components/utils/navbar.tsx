@@ -27,7 +27,7 @@ export default function NavbarComponent() {
         <Link href="/profile" className="font-medium hover:underline hover:underline-offset-4">PROFIL</Link>
         <Link href="/employees" className="font-medium hover:underline hover:underline-offset-4">GURU</Link>
         <Link href="/news" className="font-medium hover:underline hover:underline-offset-4">INFORMASI</Link>
-        <Link href="/elearning" className="font-medium hover:underline hover:underline-offset-4">E-LEARNING</Link>
+        <Link href="/ensiklopedia" className="font-medium hover:underline hover:underline-offset-4">ENSIKLOPEDIA</Link>
         <Link href="/ppdb"><ShinyButton text="PPDB ONLINE"/></Link>
       </div>
       <Sheet>
@@ -67,7 +67,7 @@ export default function NavbarComponent() {
               <Link href="/profile" className="text-xl font-bold tracking-tight">PROFIL</Link>
               <Link href="/employees" className="text-xl font-bold tracking-tight">GURU</Link>
               <Link href="/news" className="text-xl font-bold tracking-tight">INFORMASI</Link>
-              <Link href="/elearning" className="text-xl font-bold tracking-tight">E-LEARNING</Link>
+              <Link href="/ensiklopedia" className="text-xl font-bold tracking-tight">ENSIKLOPEDIA</Link>
               <Link href="/ppdb" className="text-xl font-bold tracking-tight">PPDB ONLINE</Link>
             </div>
             <div>

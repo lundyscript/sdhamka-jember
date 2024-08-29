@@ -11,11 +11,11 @@ const SubjectsPage = async ({searchParams}:{searchParams?:{ query?: string, page
   return (
     <RoleGate allowedRole="ADMIN">
       <div className="lg:flex lg:flex-row gap-4 pb-4 justify-between">
-        <Heading title="E-Learning Sekolah." description="Sistem Pembelajaran Elektronik di SD Muhammadiyah Kaliwates Jember."/>
+        <Heading title="Ensiklopedia Sekolah." description="Sistem Pembelajaran Elektronik di SD Muhammadiyah Kaliwates Jember."/>
         <Separator orientation="horizontal" className="lg:hidden my-4"/>
         <div className="flex flex-row gap-2">
           <SearchInput label="Cari Mata Pelajaran"/>
-          <CreateButton label="mata pelajaran" href="/elearning/create"/>
+          <CreateButton label="mata pelajaran" href="/subjects/create"/>
         </div>
       </div>
       <SubjectsTable query={query} currentPage={currentPage}/>

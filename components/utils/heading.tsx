@@ -11,3 +11,12 @@ export const Heading = ({title, description}: ContainerProps) => {
     </div>
   )
 }
+
+export const DetailData = ({title, value}: {title:string, value:string}) => {
+  return (
+    <div className="max-w-fit">
+      <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{title}</p>
+      <p className="font-semibold capitalize">{value}</p>
+    </div>
+  )
+}

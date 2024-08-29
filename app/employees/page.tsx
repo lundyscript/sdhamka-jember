@@ -24,7 +24,7 @@ const EmployeesPage = async ({searchParams}:{searchParams?:{ query?: string, pag
           </div>
             <BlurFade delay={0.25} inView>
               {data === 0 ?
-                <p>Tidak ada data.</p>
+                <p className="text-center">Tidak ada data.</p>
               :
                 <>
                   <TeacherTableForHomepage query={query} currentPage={currentPage}/>
