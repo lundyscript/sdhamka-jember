@@ -875,7 +875,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
               :
                 <Button type="submit" variant={"default"} className="font-medium w-full">Simpan</Button>
               }
-              <TooltipProvider delayDuration={0}>
+              {/* <TooltipProvider delayDuration={0}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Button asChild variant={"outline"} size={"icon"} className="hover:bg-rose-600/20 hover:text-rose-600"><Link href={`/adminppdb/read/${initialData.id}`}><Printer size={17}/></Link></Button>
@@ -884,7 +884,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
                     <p>Cetak</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
             </div>
           </div>
           <Separator orientation="horizontal" className="my-4"/>
@@ -1551,7 +1551,7 @@ export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
                 :
                   <Button type="submit" variant={"default"} className="font-medium w-full">Simpan</Button>
                 }
-                <TooltipProvider delayDuration={0}>
+                {/* <TooltipProvider delayDuration={0}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Button asChild variant={"outline"} size={"icon"} className="hover:bg-rose-600/20 hover:text-rose-600"><Link href={`/adminppdb/read/${initialData.id}`}><Printer size={17}/></Link></Button>
@@ -1560,7 +1560,7 @@ export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
                       <p>Cetak</p>
                     </TooltipContent>
                   </Tooltip>
-                </TooltipProvider>
+                </TooltipProvider> */}
               </div>
             </div>
             <Separator orientation="horizontal" className="my-4"/>

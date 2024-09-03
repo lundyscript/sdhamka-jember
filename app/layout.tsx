@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SDHAMKA JEMBER",
+  title: "SD HAMKA JEMBER",
   description: "Created by lundyscript.site",
 };
 
@@ -17,7 +17,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
     <SessionProvider session={session}>
       <html lang="en" suppressHydrationWarning={true} className={GeistSans.className}>
         <body>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <Toaster/>
             {children}
           </ThemeProvider>

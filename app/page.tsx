@@ -12,7 +12,7 @@ import { ArrowRightIcon } from "@radix-ui/react-icons"
 import { getAllProfiles } from "@/data/profiles"
 import { getHeadmasterData } from "@/data/teachers"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { FaInstagram, FaRegEnvelope, FaWhatsapp } from "react-icons/fa"
+import { FaInstagram, FaWhatsapp } from "react-icons/fa"
 import { BentoForHomePage, TeachersCard } from "@/components/card"
 
 

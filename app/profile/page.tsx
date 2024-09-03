@@ -5,21 +5,7 @@ import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern"
 import NavbarComponent from '@/components/utils/navbar'
 import { getAllProfiles } from '@/data/profiles'
 import { BorderBeam } from '@/components/magicui/border-beam'
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
-import { profile } from 'console'
 import { BodyPreview } from '@/components/utils/body'
-
-// Quill modules configuration
-const modules = {
-  toolbar: [
-    ["bold", "italic", "underline", "strike", "blockquote", { 'color': [] }, { 'background': [] }, { align: ["right", "center", "justify"] },{ list: "ordered" }, { list: "bullet" }, "link", "image", "video"],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  }
-};
 
 const ProfilePage = async () => {
   const sejarah = await getAllProfiles("sejarah", 1)
@@ -52,7 +38,6 @@ const ProfilePage = async () => {
                 <BodyPreview body={profile.body}/>
               </>
             ))}
-            
           </BlurFade>
         </div>
       </section>

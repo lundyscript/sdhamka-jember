@@ -165,8 +165,8 @@ export const UserButton = () => {
       <DropdownMenuContent align="end">
         {role === "ADMIN" ?
           <>
-            <Link href="/server"><DropdownMenuItem className="gap-2"><ServerCog size={17}/>Server</DropdownMenuItem></Link>
-            <Link href="/client"><DropdownMenuItem className="gap-2"><MonitorSmartphone size={17}/>Client</DropdownMenuItem></Link>
+            {/* <Link href="/server"><DropdownMenuItem className="gap-2"><ServerCog size={17}/>Server</DropdownMenuItem></Link>
+            <Link href="/client"><DropdownMenuItem className="gap-2"><MonitorSmartphone size={17}/>Client</DropdownMenuItem></Link> */}
             <Link href="/admin"><DropdownMenuItem className="gap-2"><ShieldQuestion size={17}/>Admin</DropdownMenuItem></Link>
             <Link href="/settings"><DropdownMenuItem className="gap-2"><Settings size={17}/>Settings</DropdownMenuItem></Link>
           </>

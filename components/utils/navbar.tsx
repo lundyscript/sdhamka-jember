@@ -14,7 +14,7 @@ export default function NavbarComponent() {
       <div className="mr-6 hidden lg:flex space-x-6 items-center">
         <Link href="/" className="inline-flex items-center gap-2">
           <Image
-            src="/studying-student-svgrepo-com.svg"
+            src="/img/logo.png"
             width={44}
             height={44}
             alt="Logo"

@@ -80,7 +80,7 @@ const ElearningPage = async ({searchParams}:{searchParams?:{ query?: string, pag
         <section className="w-full py-20 lg:py-28">
         <div className="container items-center max-w-4xl px-4 md:px-6 space-y-6">
           <div className="text-justify justify-center leading-loose space-y-3 z-50">
-            <Link href={{pathname: '/elearning'}} className="text-sm font-medium text-muted-foreground transition-all duration-200 ease-out hover:text-primary hover:translate-x-1">&#129120; Back to Explorer</Link>
+            <Link href={{pathname: '/ensiklopedia'}} className="text-sm font-medium text-muted-foreground transition-all duration-200 ease-out hover:text-primary hover:translate-x-1">&#129120; Back to Explorer</Link>
             <BlurFade delay={0.25} inView>
               <div className="relative my-4 h-52 w-full">
                 <Image src={subject?.image ? `/${subject.image}` : "/placeholder.svg"} alt={subject?.subject ? subject.subject : "Cover"} layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
