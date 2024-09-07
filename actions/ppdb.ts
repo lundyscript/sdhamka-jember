@@ -5,6 +5,7 @@ import { db } from "@/lib/db"
 import { put, del } from "@vercel/blob"
 import { PPDBSchema } from "@/schemas"
 import { getPPDBById } from "@/data/ppdb"
+import { getYearByStatusA } from "@/data/years"
 
 export const newPPDBAction = async (formData: FormData) => {
   const validatedFields = PPDBSchema.safeParse(
@@ -13,6 +14,11 @@ export const newPPDBAction = async (formData: FormData) => {
   if (!validatedFields.success) {
     return { error: "Invalid fields!" }
   }
+  const tahunajaranA = await getYearByStatusA()
+  if (!tahunajaranA) {
+    return { error: "Tidak ada tahun ajaran aktif!" }
+  }
+
   const {fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
   
   let imagePath1
@@ -69,7 +75,12 @@ export const newPPDBAction = async (formData: FormData) => {
 
   try {
     await db.ppdb.create({
-      data: { 
+      data: {
+        tahunajaran: {
+          connect: {
+            id: tahunajaranA.id
+          }
+        },
         registernumber,
         status,
         fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,

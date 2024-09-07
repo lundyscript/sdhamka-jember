@@ -38,9 +38,9 @@ export const newSubjectsAction = async (formData:FormData) => {
         teacher: true
       }
     })
-    return { success: "Data mata pelajaran baru berhasil ditambahkan" }
+    return { success: "Data modul ajar baru berhasil ditambahkan" }
   } catch (error) {
-    return { error: "Gagal menambahkan data mata pelajaran baru!" }
+    return { error: "Gagal menambahkan data modul ajar baru!" }
   }
 }
 
@@ -74,9 +74,9 @@ export const updateSubjectsAction = async (id:string, formData:FormData) => {
       data: { classroom, subject, body, image:imagePath },
       where: {id}
     })
-    return { success: "Data mata pelajaran berhasil diubah!" }
+    return { success: "Data modul ajar berhasil diubah!" }
   } catch (error) {
-    return { error: "Gagal mengubah data mata pelajaran!" }
+    return { error: "Gagal mengubah data modul ajar!" }
   }
 }
 
@@ -91,8 +91,8 @@ export const deleteSubjectAction = async (id:string) => {
     await db.elearning.delete({
       where:{id}
     })
-    return { success: "Data mata pelajaran berhasil dihapus!" }
+    return { success: "Data modul ajar berhasil dihapus!" }
   } catch (error) {
-    return { error: "Gagal menghapus data mata pelajaran!" }
+    return { error: "Gagal menghapus data modul ajar!" }
   }
 }

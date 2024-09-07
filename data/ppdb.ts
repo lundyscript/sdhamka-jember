@@ -9,6 +9,9 @@ export const getAllPPDB = async (query: string, currentPage: number) => {
       take: ITEMS_PER_PAGE,
       where:{
         OR:[
+          { tahunajaran:{
+            name:{ contains: query, mode: "insensitive" }}
+          },
           {
             id:{ contains: query, mode: "insensitive" },
           },
@@ -18,8 +21,11 @@ export const getAllPPDB = async (query: string, currentPage: number) => {
         ]
       },
       orderBy: [
-        {createdAt: 'desc'}
-      ]
+        {createdAt: 'asc'}
+      ],
+      include:{
+        tahunajaran: true
+      }
     })
     return ppdb
   } catch (error) {
@@ -32,6 +38,12 @@ export const getPPDBPages = async (query: string) => {
     const ppdb = await db.ppdb.count({
       where:{
         OR:[
+          { tahunajaran:{
+            name:{ contains: query, mode: "insensitive" }}
+          },
+          {
+            id:{ contains: query, mode: "insensitive" },
+          },
           {
             fullname:{ contains: query, mode: "insensitive" },
           }
@@ -53,6 +65,12 @@ export const getPPDBData = async (query: string, currentPage: number) => {
       take: ITEMS_PER_PAGE,
       where:{
         OR:[
+          { tahunajaran:{
+            name:{ contains: query, mode: "insensitive" }}
+          },
+          {
+            id:{ contains: query, mode: "insensitive" },
+          },
           {
             fullname:{ contains: query, mode: "insensitive" },
           }

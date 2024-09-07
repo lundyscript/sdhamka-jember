@@ -5,15 +5,17 @@ import React from 'react'
 import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern"
 import { cn } from '@/lib/utils'
 import { NewPPDBForm } from '@/components/form/ppdb'
+import { getYearByStatusA } from '@/data/years'
 
 const PpdbRegisterPage = async () => {
+  const active = await getYearByStatusA()
   return (
     <>
       <NavbarComponent/>
       <section className="w-full py-20 lg:py-28">
         <div className="container px-4 md:px-6">
           <BlurFade delay={0.35} inView>
-            <NewPPDBForm/>
+            <NewPPDBForm tahunajaranA={active}/>
           </BlurFade>
         </div>
       </section>

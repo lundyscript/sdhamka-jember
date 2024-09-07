@@ -108,6 +108,14 @@ export const ElearningSchema = z.object({
   .optional()
 })
 
+export const YearsSchema = z.object({
+  name: z.string(),
+  status: z.optional(z.string()),
+  startdate: z.coerce.date(),
+  enddate: z.coerce.date(),
+  
+})
+
 export const PPDBSchema = z.object({
   status                      : z.optional(z.string()),
   fullname                    : z.string(),

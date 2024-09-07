@@ -37,9 +37,9 @@ export const newPostAction = async (formData:FormData) => {
         category, title, body , image:imagePath
       },
     })
-    return { success: "Data berita baru berhasil ditambahkan" }
+    return { success: "Data informasi baru berhasil ditambahkan" }
   } catch (error) {
-    return { error: "Gagal menambahkan data berita baru!" }
+    return { error: "Gagal menambahkan data informasi baru!" }
   }
 }
 
@@ -78,9 +78,9 @@ export const updatePostAction = async (id:string, formData:FormData) => {
       data: { category, title, body, image:imagePath },
       where: {id}
     })
-    return { success: "Data berita berhasil diubah!" }
+    return { success: "Data informasi berhasil diubah!" }
   } catch (error) {
-    return { error: "Gagal mengubah data berita!" }
+    return { error: "Gagal mengubah data informasi!" }
   }
 }
 
@@ -96,8 +96,8 @@ export const deletePostAction = async (id:string) => {
     await db.posts.delete({
       where:{id}
     })
-    return { success: "Data berita berhasil dihapus!" }
+    return { success: "Data informasi berhasil dihapus!" }
   } catch (error) {
-    return { error: "Gagal menghapus data berita!" }
+    return { error: "Gagal menghapus data informasi!" }
   }
 }

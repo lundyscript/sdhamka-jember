@@ -45,6 +45,7 @@ export const PPDBTable = async ({query, currentPage}:{query: string, currentPage
                 <TableCell className="text-center">{idx+1}</TableCell>
                 <TableCell>
                   <div className="flex flex-col">
+                    <span>TA {ppdb.tahunajaran.name}</span>
                     <span className="font-semibold uppercase">#{ppdb.registernumber}</span>
                     <Badge variant={ppdb.status === "diterima" ? "success" : ppdb.status === "ditolak" ? "destructive" : "accepted"} className="w-fit capitalize">{ppdb.status}</Badge>
                   </div>

@@ -6,6 +6,7 @@ import { useDebouncedCallback } from "use-debounce"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Loader, Search } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export function SearchInput({label}: {label: string}) {
   const searchParams = useSearchParams()
@@ -64,5 +65,33 @@ export const SearchBar = () => {
         </div>
       }
     </div>
+  )
+}
+
+export function TASelect({label, tahunajaran}: {label: string, tahunajaran:any}) {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const {replace} = useRouter()
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("page", "1")
+    if(term){
+      params.set("query", term)
+    }else{
+      params.delete("query")
+    }
+    replace(`${pathname}?${params.toString()}`)
+  }, 300)
+  return (
+    <Select> 
+      <SelectTrigger className="h-9">
+        <SelectValue placeholder={label} />
+      </SelectTrigger>
+      <SelectContent>
+        {tahunajaran?.map((year:any, idx:any) => (
+          <SelectItem key={idx} value={year.name}>{year.name}</SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

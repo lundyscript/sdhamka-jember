@@ -32,7 +32,8 @@ interface UpdatePPDBFormProps {
   initialData: Ppdb
 }
 
-export const NewPPDBForm = () => {
+export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
+  const TA = tahunajaranA.name
   const router = useRouter()
   const path = usePathname()
   const [isPending, startTransition] = useTransition()
@@ -115,7 +116,7 @@ export const NewPPDBForm = () => {
     <>
       <div className="lg:w-3/5 mx-auto justify-center">
         <div className="max-w-fit">
-          <h1 className="text-3xl font-extrabold tracking-tighter capitalize">Formulir Pendaftaran Peserta Didik Baru.</h1>
+          <h1 className="text-2xl font-extrabold tracking-tighter capitalize">Formulir Pendaftaran Peserta Didik Baru Tahun Ajaran {TA}.</h1>
           <p className="text-base text-justify">Mohon untuk mengisi formulir pendaftaran sesuai dengan data yang berlaku. Jika merasa terdapat kesalahan dalam pengisian data, silahkan hubungi Tim PPDB. Jika membutuhkan bantuan Tim PPDB dalam proses pendaftaran siswa baru, silahkan klik tombol Pusat Bantuan di bawah ini.</p>
         </div>
         <Button className="bg-green-500 hover:bg-green-600 gap-2 mt-2"><HelpCircle size={17}/> Pusat Bantuan</Button>
