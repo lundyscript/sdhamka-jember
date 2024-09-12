@@ -15,7 +15,7 @@ export const getAllYears = async (query: string, currentPage: number) => {
         ]
       },
       orderBy: [
-        {createdAt: 'asc'}
+        {name: 'desc'}
       ]
     })
     return years
@@ -56,7 +56,7 @@ export const getYearsData = async (query: string, currentPage: number) => {
         ]
       },
       orderBy: [
-        {createdAt: 'desc'}
+        {name: 'desc'}
       ]
     })
     return Number(data)

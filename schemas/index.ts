@@ -117,6 +117,7 @@ export const YearsSchema = z.object({
 })
 
 export const PPDBSchema = z.object({
+  tahunajaranId               : z.optional(z.string()),
   status                      : z.optional(z.string()),
   fullname                    : z.string(),
   nickname                    : z.string(),

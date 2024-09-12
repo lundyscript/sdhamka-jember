@@ -15,9 +15,6 @@ export const PPDBTable = async ({query, currentPage}:{query: string, currentPage
   const totalPages = await getPPDBPages(query)
   const data = await getPPDBData(query, currentPage)
   const totalData = await getPPDBAllData()
-  let number = "81333192946"
-  let fix = number.substring(0,1) !== "0" ? number.substring(0,2) === "62" ? number : "62"+number : number.replace(number.charAt(0), "62")
-  console.log(fix)
   return (
     <>
       {!ppdbs?.length ? 
@@ -51,8 +48,8 @@ export const PPDBTable = async ({query, currentPage}:{query: string, currentPage
                   </div>
                 </TableCell>
                 <TableCell className="flex flex-row gap-4 items-center font-semibold capitalize">
-                  <Avatar>
-                    <AvatarImage src={ppdb.filesphotos} />
+                  <Avatar className="h-16 w-16">
+                    <AvatarImage src={ppdb.filesphotos}/>
                     <AvatarFallback><User size={24}/></AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
@@ -65,19 +62,19 @@ export const PPDBTable = async ({query, currentPage}:{query: string, currentPage
                 <TableCell>{ppdb.nisn}</TableCell>
                 <TableCell className="capitalize">{ppdb.kindergarten}</TableCell>
                 <TableCell className="text-center">{format(ppdb.createdAt, "dd/MM/yyyy")}</TableCell>
-                <TableCell className="text-center">
-                  <span className="flex flex-row">
+                <TableCell>
+                  <span className="flex flex-row justify-center items-center text-center">
                     <TooltipProvider delayDuration={0}>
                       <Tooltip>
                         <TooltipTrigger>
-                          <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-blue-600/20 hover:text-blue-600"><Link href={`/adminppdb/read/${ppdb.id}`}><Eye size={19}/></Link></Button>
+                          <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-blue-600/20 hover:text-blue-600"><Link href={`/registration/read/${ppdb.id}`}><Eye size={19}/></Link></Button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Lihat</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                    <ActionButton data="adminppdb" id={ppdb.id} name={"Calon Siswa : " + ppdb.fullname}/>
+                    <ActionButton data="registration" id={ppdb.id} name={"Calon Siswa : " + ppdb.fullname}/>
                   </span>
                 </TableCell>
               </TableRow>

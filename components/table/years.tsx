@@ -28,7 +28,7 @@ export const YearsTable = async ({query, currentPage}:{query: string, currentPag
               <TableRow>
                 <TableHead className="w-10 text-center">#</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Tahun Ajaran</TableHead>
+                <TableHead>Nama Periode</TableHead>
                 <TableHead>Tanggal Awal</TableHead>
                 <TableHead>Tanggal Akhir</TableHead>
                 <TableHead className="text-center">Aksi</TableHead>
@@ -46,7 +46,7 @@ export const YearsTable = async ({query, currentPage}:{query: string, currentPag
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Link href={`/schoolyears/edit/${year.id}`}><Pencil size={17}/></Link></Button>
+                        <Button asChild variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Link href={`/period/edit/${year.id}`}><Pencil size={17}/></Link></Button>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Ubah</p>

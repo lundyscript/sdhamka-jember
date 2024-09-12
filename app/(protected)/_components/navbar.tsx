@@ -1,9 +1,10 @@
 "use client"
 import Link from "next/link"
-import { NavigationMenuLink, NavigationMenuItem, NavigationMenuList, NavigationMenu } from "@/components/ui/navigation-menu"
+import Image from "next/image"
 import { DarkLightToggle, UserButton } from "@/components/button"
 import { ToggleGroup } from "@/components/ui/toggle-group"
-import Image from "next/image"
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar"
+
 
 export default function NavbarComponent() {
   return (
@@ -18,52 +19,26 @@ export default function NavbarComponent() {
           />
         </span>
       </div>
-      <NavigationMenu className="hidden lg:flex">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/profiles" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                PROFIL
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/teachers" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                KARYAWAN
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/posts" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                INFORMASI
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/subjects" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                Ensiklopedia
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/schoolyears" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                Tahun Ajaran
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/adminppdb" legacyBehavior passHref>
-              <NavigationMenuLink className="font-medium uppercase block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4 focus:text-accent-foreground">
-                PPDB
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+      <Menubar>
+        <MenubarMenu>
+          <MenubarTrigger>PROFIL</MenubarTrigger>
+          <MenubarContent>
+            <Link href="/profiles"><MenubarItem>PROFIL SEKOLAH</MenubarItem></Link>
+            <Link href="/teachers"><MenubarItem>KARYAWAN SEKOLAH</MenubarItem></Link>
+            <Link href="/posts"><MenubarItem>INFORMASI SEKOLAH</MenubarItem></Link>
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger><Link href="/subjects">ENSIKLOPEDIA</Link></MenubarTrigger>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>PPDB</MenubarTrigger>
+          <MenubarContent>
+            <Link href="/period"><MenubarItem>PERIODE</MenubarItem></Link>
+            <Link href="/registration"><MenubarItem>PENDAFTARAN</MenubarItem></Link>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
       <div className="ml-auto">
         <ToggleGroup variant="outline" type="multiple" className="gap-2">
           <DarkLightToggle/>

@@ -46,7 +46,7 @@ export const NewYearForm = () => {
           toast.success("Success!",{description: message.success})
         }
       })
-      router.push("/schoolyears")
+      router.push("/period")
     })
   }
   
@@ -179,7 +179,7 @@ export const UpdateYearForm: React.FC<UpdateYearFormProps> = ({initialData}) => 
           toast.success("Success!",{description: message.success})
         }
       })
-      router.push("/schoolyears")
+      router.push("/period")
     })
   }
 

@@ -13,7 +13,7 @@ export const getAllPPDB = async (query: string, currentPage: number) => {
             name:{ contains: query, mode: "insensitive" }}
           },
           {
-            id:{ contains: query, mode: "insensitive" },
+            registernumber:{ contains: query, mode: "insensitive" },
           },
           {
             fullname:{ contains: query, mode: "insensitive" },
@@ -42,7 +42,7 @@ export const getPPDBPages = async (query: string) => {
             name:{ contains: query, mode: "insensitive" }}
           },
           {
-            id:{ contains: query, mode: "insensitive" },
+            registernumber:{ contains: query, mode: "insensitive" },
           },
           {
             fullname:{ contains: query, mode: "insensitive" },
@@ -69,7 +69,7 @@ export const getPPDBData = async (query: string, currentPage: number) => {
             name:{ contains: query, mode: "insensitive" }}
           },
           {
-            id:{ contains: query, mode: "insensitive" },
+            registernumber:{ contains: query, mode: "insensitive" },
           },
           {
             fullname:{ contains: query, mode: "insensitive" },

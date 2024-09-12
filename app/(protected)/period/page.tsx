@@ -11,11 +11,11 @@ const YearsPage = async ({searchParams}:{searchParams?:{ query?: string, page?: 
   return (
     <RoleGate allowedRole="ADMIN">
       <div className="lg:flex lg:flex-row gap-4 pb-4 justify-between">
-        <Heading title="Tahun Ajaran." description="Daftar tahun ajaran di SD Muhammadiyah Kaliwates Jember."/>
+        <Heading title="Periode PPDB." description="Daftar periode Penerimaan Peserta Didik Baru di SD Muhammadiyah Kaliwates Jember."/>
         <Separator orientation="horizontal" className="lg:hidden my-4"/>
         <div className="flex flex-row gap-2">
-          <SearchInput label="Cari tahun ajaran"/>
-          <CreateButton label="tahun ajaran" href="/schoolyears/create"/>
+          <SearchInput label="Cari periode ppdb"/>
+          <CreateButton label="periode ppdb" href="/period/create"/>
         </div>
       </div>
       <YearsTable query={query} currentPage={currentPage}/>

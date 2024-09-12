@@ -83,7 +83,7 @@ export function TASelect({label, tahunajaran}: {label: string, tahunajaran:any})
     replace(`${pathname}?${params.toString()}`)
   }, 300)
   return (
-    <Select> 
+    <Select onValueChange={handleSearch}> 
       <SelectTrigger className="h-9">
         <SelectValue placeholder={label} />
       </SelectTrigger>

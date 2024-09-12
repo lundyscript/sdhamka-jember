@@ -108,7 +108,7 @@ export const updatePPDBAction = async (id:string, formData:FormData) => {
   if(!prevData) {
     return { error: "Data not found!" }
   }
-  const {status,fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
+  const {tahunajaranId,status,fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
 
   let imagePath1
   if (!filesfamilycard || filesfamilycard.size <= 0) {
@@ -158,6 +158,7 @@ export const updatePPDBAction = async (id:string, formData:FormData) => {
   try { 
     await db.ppdb.update({
       data: { 
+        tahunajaranId,
         status,
         fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,
         filesfamilycard:imagePath1,

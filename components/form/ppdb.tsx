@@ -13,29 +13,37 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
-import { CalendarIcon, HelpCircle, Printer, Save } from "lucide-react"
+import { CalendarIcon, Check, ChevronsUpDown, HelpCircle, Printer, Save } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { newPPDBAction, updatePPDBAction } from "@/actions/ppdb"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Ppdb } from "@prisma/client"
 import { Badge } from "../ui/badge"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import Link from "next/link"
 import { Table, TableBody, TableCell, TableRow } from "../ui/table"
 import { DetailData } from "../utils/heading"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "@/components/ui/command"
+
 
 interface UpdatePPDBFormProps {
   initialData: Ppdb
+  period: any
+  allPeriod: any
 }
 
 export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
-  const TA = tahunajaranA.name
   const router = useRouter()
   const path = usePathname()
+  if (path.search("admin") === -1) {
+    console.log("client page")
+  } else {
+    console.log("server page")
+  }
+  const TA = tahunajaranA.name
   const [isPending, startTransition] = useTransition()
   const [preview1, setPreview1] = useState("")
   const [preview2, setPreview2] = useState("")
@@ -92,7 +100,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
     values.filespayment && formData.append("filespayment", values.filespayment)
     startTransition(() => {
       newPPDBAction(formData).then((message) => {
-        if (path.search("admin") == -1) {
+        if (path.search("admin") === -1) {
           if (message.error) {
             router.push("/ppdb/error")
           }
@@ -106,7 +114,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
           if (message.success) {
             toast.success("Success!",{description: message.success})
           }
-          router.push("/adminppdb")
+          router.push("/registration")
         }
       })
     })
@@ -285,7 +293,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
                   <Separator orientation="horizontal" className="col-span-2 my-3"/>
                   <FormField control={form.control} name="nisn" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>NISN <span className="text-red-500">*</span></FormLabel>
+                      <FormLabel>NISN <span className="text-xs italic">(jika tidak ada, isi dengan angka 0)</span> <span className="text-red-500">*</span></FormLabel>
                       <FormControl><Input {...field} disabled={isPending}/></FormControl>
                       <FormMessage/>
                     </FormItem>
@@ -588,6 +596,9 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-xl">Unggah Dokumen Pendukung</CardTitle>
+                  <CardDescription className="font-medium">Ketentuan : <br/>
+                    <span className="text-primary text-xs font-italic ">File yang dapat diterima berupa foto dengan format jpg/png dengan ukuran maksimal 3mb.<br/>Foto harus dalam keadan jelas dan dapat dibaca dengan baik.</span>
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0 space-y-4">
                   <div className="space-y-4">
@@ -638,7 +649,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
                   <div className="space-y-4">
                     <FormField control={form.control} name="filescertificate" render={({ field: { value, onChange, ...fieldProps } }) => (
                       <FormItem>
-                        <FormLabel>Ijazah TK <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Ijazah TK  / Surat Keterangan Lulus <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
                             onChange={ (event) => 
@@ -721,8 +732,9 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
 }
 
 
-export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
+export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData, period, allPeriod}) => {
   const router = useRouter()
+  const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [preview1, setPreview1] = useState("")
   const [preview2, setPreview2] = useState("")
@@ -732,6 +744,8 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
   const form = useForm<z.infer<typeof PPDBSchema>>({
     resolver:zodResolver(PPDBSchema),
     defaultValues: {
+      tahunajaranId : initialData.tahunajaranId,
+      status : initialData.status,
       fullname : initialData.fullname,
       nickname : initialData.nickname,
       numberbirthcertificate : initialData.numberbirthcertificate,
@@ -774,6 +788,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
   
   const onSubmit = (values: z.infer<typeof PPDBSchema>) => {
     const formData = new FormData()
+    values.tahunajaranId && formData.append("tahunajaranId", values.tahunajaranId)
     values.status && formData.append("status", values.status)
     values.fullname && formData.append("fullname", values.fullname)
     values.nickname && formData.append("nickname", values.nickname)
@@ -821,7 +836,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
         if (message.success) {
           toast.success("Success!",{description: message.success})
         }
-        router.push("/adminppdb")
+        router.push("/registration")
       })
     })
   }
@@ -837,24 +852,63 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
               <Table className="max-w-fit">
                 <TableBody className="border-0">
                   <TableRow className="border-0 hover:bg-transparent">
+                    <TableCell className="py-1 max-w-fit">Periode Pendaftaran</TableCell>
+                    <TableCell className="py-1">:</TableCell>
+                    <TableCell className="py-1"><span className="uppercase font-bold">{period}</span></TableCell>
+                  </TableRow>
+                  <TableRow className="border-0 hover:bg-transparent">
                     <TableCell className="py-1 max-w-fit">Nomor Pendaftaran</TableCell>
                     <TableCell className="py-1">:</TableCell>
                     <TableCell className="py-1">#<span className="uppercase font-bold">{initialData.registernumber}</span></TableCell>
-                  </TableRow>
-                  <TableRow className="border-0 hover:bg-transparent">
-                    <TableCell className="py-1 max-w-fit">Status Pendaftaran</TableCell>
-                    <TableCell className="py-1">:</TableCell>
-                    <TableCell className="py-1"><Badge variant={initialData.status === "diterima" ? "success" : initialData.status === "ditolak" ? "destructive" : "accepted"} className="w-fit capitalize">{initialData.status}</Badge></TableCell>
                   </TableRow>
                   <TableRow className="border-0 hover:bg-transparent">
                     <TableCell className="py-1 max-w-fit">Tanggal Pendaftaran</TableCell>
                     <TableCell className="py-1">:</TableCell>
                     <TableCell className="py-1"><span className="uppercase font-bold">{format(initialData.createdAt, "dd/MM/yyyy")}</span></TableCell>
                   </TableRow>
+                  <TableRow className="border-0 hover:bg-transparent">
+                    <TableCell className="py-1 max-w-fit">Status Pendaftaran</TableCell>
+                    <TableCell className="py-1">:</TableCell>
+                    <TableCell className="py-1"><Badge variant={initialData.status === "diterima" ? "success" : initialData.status === "ditolak" ? "destructive" : "accepted"} className="w-fit capitalize">{initialData.status}</Badge></TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </div>
             <div className="flex flex-row gap-2 items-end">
+              <FormField control={form.control} name="tahunajaranId" render={({ field }) => (
+                <FormItem className="flex flex-col space-y-3 mt-0.5 pt-1">
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button variant="outline" role="combobox" className={cn("justify-between", !field.value && "text-muted-foreground")}>
+                          {field.value ? allPeriod.find((year: { name: string, id:string }) => year.id === field.value )?.name : "Pilih Periode"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0">
+                      <Command>
+                        <CommandInput placeholder="Pilih Periode" />
+                        <CommandEmpty>Tidak ada data.</CommandEmpty>
+                        <CommandList>
+                          <CommandGroup>
+                            {allPeriod.map((year: { id: string; name: string }) => (
+                              <CommandItem className="hover:cursor-pointer" value={year.name} key={year.id} onSelect={() => {
+                                  form.setValue("tahunajaranId", year.id)
+                                  setOpen(false)
+                              }} >
+                                <Check className={cn("mr-2 h-4 w-4", year.id === field.value ? "opacity-100" : "opacity-0")} />
+                                {year.name}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}/>
               <FormField control={form.control} name="status" render={({ field }) => (
                 <FormItem>
                   <Select onValueChange={field.onChange}> 
@@ -1354,6 +1408,9 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
               <Card>
                 <CardHeader>
                   <CardTitle className="text-xl">Unggah Dokumen Pendukung</CardTitle>
+                  <CardDescription className="font-medium">Ketentuan : <br/>
+                    <span className="text-primary text-xs font-italic ">File yang dapat diterima berupa foto dengan format jpg/png dengan ukuran maksimal 3mb.<br/>Foto harus dalam keadan jelas dan dapat dibaca dengan baik.</span>
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0 space-y-4">
                   <div className="space-y-4">
@@ -1403,7 +1460,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
                   <div className="space-y-4">
                     <FormField control={form.control} name="filescertificate" render={({ field: { value, onChange, ...fieldProps } }) => (
                       <FormItem>
-                        <FormLabel>Ijazah TK <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Ijazah TK / Surat Keterangan Lulus <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
                           <Input {...fieldProps} type="file" accept="image/png, image/jpeg, image/jpg" 
                             onChange={ (event) => 
@@ -1479,7 +1536,7 @@ export const UpdatePPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => 
 }
 
 
-export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
+export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData, period, allPeriod}) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -1497,7 +1554,7 @@ export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
         if (message.success) {
           toast.success("Success!",{description: message.success})
         }
-        router.push("/adminppdb")
+        router.push("/registration")
       })
     })
   }
@@ -1513,19 +1570,24 @@ export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
                 <Table className="max-w-fit">
                   <TableBody className="border-0">
                     <TableRow className="border-0 hover:bg-transparent">
+                      <TableCell className="py-1 max-w-fit">Periode Pendaftaran</TableCell>
+                      <TableCell className="py-1">:</TableCell>
+                      <TableCell className="py-1"><span className="uppercase font-bold">{period}</span></TableCell>
+                    </TableRow>
+                    <TableRow className="border-0 hover:bg-transparent">
                       <TableCell className="py-1 max-w-fit">Nomor Pendaftaran</TableCell>
                       <TableCell className="py-1">:</TableCell>
                       <TableCell className="py-1">#<span className="uppercase font-bold">{initialData.registernumber}</span></TableCell>
                     </TableRow>
                     <TableRow className="border-0 hover:bg-transparent">
-                      <TableCell className="py-1 max-w-fit">Status Pendaftaran</TableCell>
-                      <TableCell className="py-1">:</TableCell>
-                      <TableCell className="py-1"><Badge variant={initialData.status === "diterima" ? "success" : initialData.status === "ditolak" ? "destructive" : "accepted"} className="w-fit capitalize">{initialData.status}</Badge></TableCell>
-                    </TableRow>
-                    <TableRow className="border-0 hover:bg-transparent">
                       <TableCell className="py-1 max-w-fit">Tanggal Pendaftaran</TableCell>
                       <TableCell className="py-1">:</TableCell>
                       <TableCell className="py-1"><span className="uppercase font-bold">{format(initialData.createdAt, "dd/MM/yyyy")}</span></TableCell>
+                    </TableRow>
+                    <TableRow className="border-0 hover:bg-transparent">
+                      <TableCell className="py-1 max-w-fit">Status Pendaftaran</TableCell>
+                      <TableCell className="py-1">:</TableCell>
+                      <TableCell className="py-1"><Badge variant={initialData.status === "diterima" ? "success" : initialData.status === "ditolak" ? "destructive" : "accepted"} className="w-fit capitalize">{initialData.status}</Badge></TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -1647,7 +1709,7 @@ export const ReadPPDBForm: React.FC<UpdatePPDBFormProps> = ({initialData}) => {
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Ijazah TK</p>
+                        <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Ijazah TK / Surat Keterangan Lulus</p>
                         <div className="relative h-96 w-full">
                           <Image src={initialData.filescertificate} alt="Kartu Keluarga" layout="fill" sizes="100vw" priority className="rounded-md object-cover" />
                         </div>

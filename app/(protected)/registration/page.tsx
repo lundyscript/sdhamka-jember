@@ -16,9 +16,9 @@ const AdminPPDBPage = async ({searchParams}:{searchParams?:{ query?: string, pag
         <Heading title="Penerimaan Peserta Didik Baru." description="Daftar penerimaan peserta didik baru SD Muhammadiyah Kaliwates Jember."/>
         <Separator orientation="horizontal" className="lg:hidden my-4"/>
         <div className="flex flex-row gap-2">
-          {/* <TASelect label="Tahun Ajaran" tahunajaran={tahunajaran}/> */}
+          <TASelect label="Periode" tahunajaran={tahunajaran}/>
           <SearchInput label="Cari Data Calon Siswa"/>
-          <CreateButton label="PPDB" href="/adminppdb/create"/>
+          <CreateButton label="PPDB" href="/registration/create"/>
         </div>
       </div>
       <PPDBTable query={query} currentPage={currentPage}/>

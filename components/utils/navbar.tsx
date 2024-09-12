@@ -172,7 +172,7 @@ export default function NavbarComponent() {
         <TooltipProvider delayDuration={0}>
           <Tooltip>
             <TooltipTrigger>
-              <Link href="/" target="_blank" className="h-10 w-10 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+              <Link href="https://mail.google.com/mail/?view=cm&fs=1&to=sdm.kaliwates@gmail.com" target="_blank" className="h-10 w-10 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
                 <FaRegEnvelope size={18}/>
               </Link>
             </TooltipTrigger>

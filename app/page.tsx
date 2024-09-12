@@ -168,7 +168,7 @@ const HomePage = async () => {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold">Email</h3>
-                        <p className="text-muted-foreground">info@example.com</p>
+                        <p className="text-muted-foreground">sdm.kaliwates@gmail.com</p>
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold">Media Sosial</h3>
