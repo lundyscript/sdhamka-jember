@@ -38,11 +38,6 @@ interface UpdatePPDBFormProps {
 export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const router = useRouter()
   const path = usePathname()
-  if (path.search("admin") === -1) {
-    console.log("client page")
-  } else {
-    console.log("server page")
-  }
   const TA = tahunajaranA.name
   const [isPending, startTransition] = useTransition()
   const [preview1, setPreview1] = useState("")
@@ -51,7 +46,11 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const [preview4, setPreview4] = useState("")
   const [preview5, setPreview5] = useState("")
   const form = useForm<z.infer<typeof PPDBSchema>>({
-    resolver:zodResolver(PPDBSchema)
+    resolver:zodResolver(PPDBSchema),
+    defaultValues:{
+      tahunajaranId: tahunajaranA.id,
+      status:"terdaftar"
+    }
   })
 
   const checkStudent = form.formState.errors.fullname || form.formState.errors.nickname || form.formState.errors.numberbirthcertificate || form.formState.errors.nik || form.formState.errors.gender || form.formState.errors.childnumber || form.formState.errors.siblings || form.formState.errors.placeofbirth || form.formState.errors.dateofbirth || form.formState.errors.address || form.formState.errors.livewith || form.formState.errors.childstatus || form.formState.errors.nisn || form.formState.errors.kindergarten || form.formState.errors.kindergartenaddress
@@ -98,6 +97,11 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
     values.filescertificate && formData.append("filescertificate", values.filescertificate)
     values.filesphotos && formData.append("filesphotos", values.filesphotos)
     values.filespayment && formData.append("filespayment", values.filespayment)
+    if (path.search("admin") === -1) {
+      console.log("client page")
+    } else {
+      console.log("server page")
+    }
     startTransition(() => {
       newPPDBAction(formData).then((message) => {
         if (path.search("admin") === -1) {

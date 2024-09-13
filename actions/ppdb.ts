@@ -19,7 +19,7 @@ export const newPPDBAction = async (formData: FormData) => {
     return { error: "Tidak ada tahun ajaran aktif!" }
   }
 
-  const {fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
+  const {tahunajaranId,fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
   
   let imagePath1
   if (!filesfamilycard || filesfamilycard.size <= 0) {
