@@ -27,6 +27,7 @@ import Link from "next/link"
 import { Table, TableBody, TableCell, TableRow } from "../ui/table"
 import { DetailData } from "../utils/heading"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "@/components/ui/command"
+import { useCurrentRole } from "@/hooks/use-current-role"
 
 
 interface UpdatePPDBFormProps {
@@ -36,6 +37,7 @@ interface UpdatePPDBFormProps {
 }
 
 export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
+  const role = useCurrentRole()
   const router = useRouter()
   const path = usePathname()
   const TA = tahunajaranA.name
@@ -57,12 +59,6 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const checkParents = form.formState.errors.fathersname || form.formState.errors.fathersnumber || form.formState.errors.fathersplaceofbirth || form.formState.errors.fathersdateofbirth || form.formState.errors.fathersjob || form.formState.errors.fatherslasteducation || form.formState.errors.fathersincome || form.formState.errors.mothersname || form.formState.errors.mothersnumber || form.formState.errors.mothersplaceofbirth || form.formState.errors.mothersdateofbirth || form.formState.errors.mothersjob || form.formState.errors.motherslasteducation
   const checkFiles   = form.formState.errors.filesfamilycard || form.formState.errors.filesbirthcertificate || form.formState.errors.filescertificate || form.formState.errors.filesphotos || form.formState.errors.filespayment 
   
-  if (path.search("create") === -1) {
-    console.log("client page")
-  } else {
-    console.log("server page")
-  }
-
   const onSubmit = (values: z.infer<typeof PPDBSchema>) => {
     const formData = new FormData()
     values.fullname && formData.append("fullname", values.fullname)
@@ -103,14 +99,10 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
     values.filescertificate && formData.append("filescertificate", values.filescertificate)
     values.filesphotos && formData.append("filesphotos", values.filesphotos)
     values.filespayment && formData.append("filespayment", values.filespayment)
-    if (path.search("create") === -1) {
-      console.log("client page")
-    } else {
-      console.log("server page")
-    }
+
     startTransition(() => {
       newPPDBAction(formData).then((message) => {
-        if (path.search("create") === -1) {
+        if (role !== 'ADMIN') {
           if (message.error) {
             router.push("/ppdb/error")
           }
