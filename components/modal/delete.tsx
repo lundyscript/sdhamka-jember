@@ -61,7 +61,7 @@ export const DeleteModal = ({data, id, name}: {data: string, id: string, name: s
         router.push("/subjects")
       })
     }
-    if (data === "adminppdb") {
+    if (data === "registration") {
       startTransition(() => {
         deletePPDBAction(id).then((message) => {
           if (message.error) {
@@ -73,7 +73,7 @@ export const DeleteModal = ({data, id, name}: {data: string, id: string, name: s
         })
         document.getElementById("closeDialog")?.click()
         document.getElementById("actionButton")?.click()
-        router.push("/adminppdb")
+        router.push("/registration")
       })
     }
   }

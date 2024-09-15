@@ -22,8 +22,6 @@ import { useEffect, useState } from "react"
 export const ActionButton = ({data, id, name}: {data: string, id: string, name: string}) => {
   return (
     <div className="flex flex-row justify-center items-center text-center">
-      {/* <Link href={`/${data}/edit/${id}`}><Button variant={"ghost"} size={"icon"} className="hover:bg-yellow-600/20 hover:text-yellow-600"><Pencil size={17}/></Button></Link>
-      <DeleteModal data={data} id={id} name={name}/> */}
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger>
@@ -44,7 +42,7 @@ export const CreateButton = ({href, label}: {href: string, label: string}) => {
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"default"} size={"sm"} className="font-medium border">
+          <Button variant={"default"} size={"icon"} className="font-medium border">
             <Link href={href}><Plus size={17} /></Link>
           </Button>
         </TooltipTrigger>

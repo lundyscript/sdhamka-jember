@@ -4,7 +4,7 @@ import { PPDBTable } from '@/components/table/ppdb'
 import { Separator } from '@/components/ui/separator'
 import { Heading } from '@/components/utils/heading'
 import { RoleGate } from '@/components/utils/role-gate'
-import { getAllYearsData } from '@/data/years'
+import { getAllYearsData, getYearByStatusA } from '@/data/years'
 
 const AdminPPDBPage = async ({searchParams}:{searchParams?:{ query?: string, page?: string }}) => {
   const query = searchParams?.query || ""

@@ -21,7 +21,7 @@ export const getAllPPDB = async (query: string, currentPage: number) => {
         ]
       },
       orderBy: [
-        {createdAt: 'asc'}
+        {createdAt: 'desc'}
       ],
       include:{
         tahunajaran: true
