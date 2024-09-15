@@ -102,17 +102,17 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
 
     startTransition(() => {
       newPPDBAction(formData).then((message) => {
-        if (message.error) {
-          toast.error("Error!",{description: message.error})
+        if (message.success) {
+          toast.success("Success!",{description: message.success})
           if (role !== 'ADMIN') {
-            router.push("/ppdb/error")
+            router.push("/ppdb/success")
           } else {
             router.push("/registration")
           }
         } else {
-          toast.success("Success!",{description: message.success})
+          toast.error("Error!",{description: message.error})
           if (role !== 'ADMIN') {
-            router.push("/ppdb/success")
+            router.push("/ppdb/error")
           } else {
             router.push("/registration")
           }
