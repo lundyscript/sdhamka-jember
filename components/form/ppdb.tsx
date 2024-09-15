@@ -109,8 +109,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
           } else {
             router.push("/registration")
           }
-        }
-        if (message.success) {
+        } else {
           toast.success("Success!",{description: message.success})
           if (role !== 'ADMIN') {
             router.push("/ppdb/success")
