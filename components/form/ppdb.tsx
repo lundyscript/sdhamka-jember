@@ -39,7 +39,6 @@ interface UpdatePPDBFormProps {
 export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const role = useCurrentRole()
   const router = useRouter()
-  const path = usePathname()
   const TA = tahunajaranA.name
   const [isPending, startTransition] = useTransition()
   const [preview1, setPreview1] = useState("")
@@ -47,6 +46,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const [preview3, setPreview3] = useState("")
   const [preview4, setPreview4] = useState("")
   const [preview5, setPreview5] = useState("")
+  const [message, setMessage] = useState("")
   const form = useForm<z.infer<typeof PPDBSchema>>({
     resolver:zodResolver(PPDBSchema),
     defaultValues:{
@@ -102,22 +102,24 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
 
     startTransition(() => {
       newPPDBAction(formData).then((message) => {
+        if (message.error) {
+          toast.error("Error!",{description: message.error})
+          setMessage("error")
+        }
         if (message.success) {
           toast.success("Success!",{description: message.success})
-          if (role !== 'ADMIN') {
-            router.push("/ppdb/success")
-          } else {
-            router.push("/registration")
-          }
-        } else {
-          toast.error("Error!",{description: message.error})
-          if (role !== 'ADMIN') {
-            router.push("/ppdb/error")
-          } else {
-            router.push("/registration")
-          }
+          setMessage("success")
         }
       })
+      if(role !== 'ADMIN'){
+        if(message === "error"){
+          router.push("/ppdb/error")
+        }else{
+          router.push("/ppdb/success")
+        }
+      } else {
+        router.push("/registration")
+      }
     })
   }
   
