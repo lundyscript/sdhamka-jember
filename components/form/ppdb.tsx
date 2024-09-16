@@ -194,14 +194,14 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
                   <FormField control={form.control} name="childnumber" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Anak Ke <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input {...field} disabled={isPending}/></FormControl>
+                      <FormControl><Input {...field} disabled={isPending} type="number"/></FormControl>
                       <FormMessage/>
                     </FormItem>
                   )}/>
                   <FormField control={form.control} name="siblings" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Jumlah Saudara <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input {...field} disabled={isPending}/></FormControl>
+                      <FormControl><Input {...field} disabled={isPending} type="number"/></FormControl>
                       <FormMessage/>
                     </FormItem>
                   )}/>
@@ -334,7 +334,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
                   <FormField control={form.control} name="fathersnumber" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nomor HP/Whatsapp <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input type="number" {...field} disabled={isPending}/></FormControl>
+                      <FormControl><Input {...field} disabled={isPending} type="number"/></FormControl>
                       <FormMessage/>
                     </FormItem>
                   )}/>
@@ -469,7 +469,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
                   <FormField control={form.control} name="mothersnumber" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nomor HP/Whatsapp <span className="text-red-500">*</span></FormLabel>
-                      <FormControl><Input type="number" {...field} disabled={isPending}/></FormControl>
+                      <FormControl><Input {...field} disabled={isPending} type="number"/></FormControl>
                       <FormMessage/>
                     </FormItem>
                   )}/>
