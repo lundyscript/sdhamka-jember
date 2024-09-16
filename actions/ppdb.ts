@@ -18,8 +18,7 @@ export const newPPDBAction = async (formData: FormData) => {
   if (!tahunajaranA) {
     return { error: "Tidak ada tahun ajaran aktif!" }
   }
-  const registernumber = v4().replaceAll("-","").substring(1,11)
-  const status = "terdaftar"
+  
   const {fullname,nickname,numberbirthcertificate,nik,gender,childnumber,siblings,placeofbirth,dateofbirth,address,livewith,childstatus,nisn,kindergarten,kindergartenaddress,fathersname,fathersnumber,fathersplaceofbirth,fathersdateofbirth,fathersjob,fathersnameoftheagency,fathersaddressoftheagency,fatherslasteducation,fathersincome,mothersname,mothersnumber,mothersplaceofbirth,mothersdateofbirth,mothersjob,mothersnameoftheagency,mothersaddressoftheagency,motherslasteducation,mothersincome,filesfamilycard,filesbirthcertificate,filescertificate,filesphotos,filespayment} = validatedFields.data
   
   let imagePath1
@@ -71,6 +70,9 @@ export const newPPDBAction = async (formData: FormData) => {
     imagePath5 = url
   }
 
+  const registernumber = v4().replaceAll("-","").substring(1,11)
+  const status = "terdaftar"
+  
   try {
     await db.ppdb.create({
       data: {
