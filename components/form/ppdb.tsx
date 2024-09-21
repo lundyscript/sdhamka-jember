@@ -46,7 +46,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const [preview3, setPreview3] = useState("")
   const [preview4, setPreview4] = useState("")
   const [preview5, setPreview5] = useState("")
-  const [message, setMessage] = useState("")
+  const [pesan, setPesan] = useState("")
   const form = useForm<z.infer<typeof PPDBSchema>>({
     resolver:zodResolver(PPDBSchema),
     defaultValues:{
@@ -59,7 +59,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
   const checkParents = form.formState.errors.fathersname || form.formState.errors.fathersnumber || form.formState.errors.fathersplaceofbirth || form.formState.errors.fathersdateofbirth || form.formState.errors.fathersjob || form.formState.errors.fatherslasteducation || form.formState.errors.fathersincome || form.formState.errors.mothersname || form.formState.errors.mothersnumber || form.formState.errors.mothersplaceofbirth || form.formState.errors.mothersdateofbirth || form.formState.errors.mothersjob || form.formState.errors.motherslasteducation
   const checkFiles   = form.formState.errors.filesfamilycard || form.formState.errors.filesbirthcertificate || form.formState.errors.filescertificate || form.formState.errors.filesphotos || form.formState.errors.filespayment 
   
-  const onSubmit = (values: z.infer<typeof PPDBSchema>) => {
+  const onSubmitAdmin = (values: z.infer<typeof PPDBSchema>) => {
     const formData = new FormData()
     values.fullname && formData.append("fullname", values.fullname)
     values.nickname && formData.append("nickname", values.nickname)
@@ -104,22 +104,67 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
       newPPDBAction(formData).then((message) => {
         if (message.error) {
           toast.error("Error!",{description: message.error})
-          setMessage("error")
         }
         if (message.success) {
           toast.success("Success!",{description: message.success})
-          setMessage("success")
         }
       })
-      if(role !== 'ADMIN'){
-        if(message === "error"){
+      router.push("/registration")
+    })
+  }
+
+  const onSubmitUser = (values: z.infer<typeof PPDBSchema>) => {
+    const formData = new FormData()
+    values.fullname && formData.append("fullname", values.fullname)
+    values.nickname && formData.append("nickname", values.nickname)
+    values.numberbirthcertificate && formData.append("numberbirthcertificate", values.numberbirthcertificate)
+    values.nik && formData.append("nik", values.nik)
+    values.gender && formData.append("gender", values.gender)
+    values.childnumber && formData.append("childnumber", values.childnumber)
+    values.siblings && formData.append("siblings", values.siblings)
+    values.placeofbirth && formData.append("placeofbirth", values.placeofbirth)
+    values.dateofbirth && formData.append("dateofbirth", values.dateofbirth.toISOString())
+    values.address && formData.append("address", values.address)
+    values.livewith && formData.append("livewith", values.livewith)
+    values.childstatus && formData.append("childstatus", values.childstatus)
+    values.nisn && formData.append("nisn", values.nisn)
+    values.kindergarten && formData.append("kindergarten", values.kindergarten)
+    values.kindergartenaddress && formData.append("kindergartenaddress", values.kindergartenaddress)
+    values.fathersname && formData.append("fathersname", values.fathersname)
+    values.fathersnumber && formData.append("fathersnumber", values.fathersnumber)
+    values.fathersplaceofbirth && formData.append("fathersplaceofbirth", values.fathersplaceofbirth)
+    values.fathersdateofbirth && formData.append("fathersdateofbirth", values.fathersdateofbirth.toISOString())
+    values.fathersjob && formData.append("fathersjob", values.fathersjob)
+    values.fathersnameoftheagency && formData.append("fathersnameoftheagency", values.fathersnameoftheagency)
+    values.fathersaddressoftheagency && formData.append("fathersaddressoftheagency", values.fathersaddressoftheagency)
+    values.fatherslasteducation && formData.append("fatherslasteducation", values.fatherslasteducation)
+    values.fathersincome && formData.append("fathersincome", values.fathersincome)
+    values.mothersname && formData.append("mothersname", values.mothersname)
+    values.mothersnumber && formData.append("mothersnumber", values.mothersnumber)
+    values.mothersplaceofbirth && formData.append("mothersplaceofbirth", values.mothersplaceofbirth)
+    values.mothersdateofbirth && formData.append("mothersdateofbirth", values.mothersdateofbirth.toISOString())
+    values.mothersjob && formData.append("mothersjob", values.mothersjob)
+    values.mothersnameoftheagency && formData.append("mothersnameoftheagency", values.mothersnameoftheagency)
+    values.mothersaddressoftheagency && formData.append("mothersaddressoftheagency", values.mothersaddressoftheagency)
+    values.motherslasteducation && formData.append("motherslasteducation", values.motherslasteducation)
+    values.mothersincome && formData.append("mothersincome", values.mothersincome)
+    values.filesfamilycard && formData.append("filesfamilycard", values.filesfamilycard)
+    values.filesbirthcertificate && formData.append("filesbirthcertificate", values.filesbirthcertificate)
+    values.filescertificate && formData.append("filescertificate", values.filescertificate)
+    values.filesphotos && formData.append("filesphotos", values.filesphotos)
+    values.filespayment && formData.append("filespayment", values.filespayment)
+
+    startTransition(() => {
+      newPPDBAction(formData).then((message) => {
+        if (message.error) {
+          toast.error("Error!",{description: message.error})
           router.push("/ppdb/error")
-        }else{
+        }
+        if (message.success) {
+          toast.success("Success!",{description: message.success})
           router.push("/ppdb/success")
         }
-      } else {
-        router.push("/registration")
-      }
+      })
     })
   }
   
@@ -133,7 +178,7 @@ export const NewPPDBForm = ({tahunajaranA}: {tahunajaranA:any}) => {
         <Button className="bg-green-500 hover:bg-green-600 gap-2 mt-2"><HelpCircle size={17}/> Pusat Bantuan</Button>
         <Separator orientation="horizontal" className="my-4"/>
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-6" onSubmit={form.handleSubmit(role == "ADMIN" ? onSubmitAdmin : onSubmitUser)}>
           <Tabs defaultValue="student">
             <TabsList className="w-full h-10">
               <TabsTrigger className={checkStudent ? "w-full h-8 !text-red-500" : "w-full h-8"} value="student">Calon Siswa <span className={checkStudent ? "visible text-red-500" : "invisible"}>*</span></TabsTrigger>
