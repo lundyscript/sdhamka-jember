@@ -13,7 +13,7 @@ export const TeachersCard = async () => {
   const teachers = await getAllTeachersData()
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee pauseOnHover className="[--duration:50s]">
         {teachers.map((teacher) => (
           <div key={teacher.id}>
             <figure className={cn("relative w-56 lg:w-80 rounded-lg cursor-pointer overflow-hidden border p-4 space-y-4","border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]","dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",)}>
@@ -44,7 +44,7 @@ export const SubjectsCard = async ({query, currentPage}:{query: string, currentP
           {subjects.map((subject, idx) => (
             <div key={idx} className={cn("group relative flex flex-col justify-between overflow-hidden rounded-xl text-left","bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]","transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]")}>
               <div>
-                <Image src={subject.image ? `/${subject.image}` : "/placeholder.svg"} alt={subject.subject} layout="fill" sizes="100vw" priority className="absolute rounded-md object-cover border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
+                <Image src={subject.image ? `/${subject.image}` : "/placeholder.svg"} alt={subject.subject} width={0} height={0} sizes="100vw" className="w-full h-full absolute rounded-md object-cover object-center border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
               </div>
               <div className="z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
                 <div className="flex flex-row gap-4 pb-2">
@@ -73,7 +73,7 @@ export const BentoForHomePage = async () => {
         {news.map((post, idx) => (
           <div key={idx} className={cn(idx === 0 || idx === 3 ? "lg:col-span-2" : "col-span-1","group relative flex flex-col justify-between overflow-hidden rounded-xl text-left","bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]","transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]")}>
             <div>
-              <Image src={post.image ? `${post.image}` : "/placeholder.svg"} alt={post.title} layout="fill" sizes="100vw" priority className="absolute rounded-md object-cover border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
+              <Image src={post.image ? `${post.image}` : "/placeholder.svg"} alt={post.title} width={0} height={0} sizes="100vw" className="w-full h-full absolute rounded-md object-cover object-center border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
             </div>
             <div className="z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
               <Link href={`/news?read=${post.id}`}><h3 className="text-xl font-semibold text-primary">{post.title}</h3></Link>
@@ -96,7 +96,7 @@ export const BentoForNewsPage = async ({query, currentPage}:{query: string, curr
       {news.map((post, idx) => (
         <div key={idx}className={cn("group relative flex flex-col justify-between overflow-hidden rounded-xl text-left","bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]","transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]")}>
           <div>
-            <Image src={post.image ? `${post.image}` : "/placeholder.svg"} alt={post.title} layout="fill" sizes="100vw" priority className="absolute rounded-md object-cover border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
+            <Image src={post.image ? `${post.image}` : "/placeholder.svg"} alt={post.title} width={0} height={0} sizes="100vw" className="w-full h-full absolute rounded-md object-cover object-center border transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105" />
           </div>
           <div className="z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
             <Link href={`/news?read=${post.id}`}><h3 className="capitalize text-xl font-semibold text-primary">{post.title}</h3></Link>

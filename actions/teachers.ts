@@ -69,7 +69,9 @@ export const updateTeacherAction = async (id:string, formData:FormData) => {
     // await fs.writeFileSync(filePath, buffer)
     // imagePath = `uploads/${rdm}_${image.name}`
     // Vercel Blob
-    await del(prevData.image)
+    if(prevData.image) {
+      await del(prevData.image)
+    }
     const {url} = await put(image.name, image, {access: "public", multipart: true})
     imagePath = url
   }
@@ -86,11 +88,12 @@ export const updateTeacherAction = async (id:string, formData:FormData) => {
 
 export const deleteTeacherAction = async (id:string) => {
   const prevData = await getTeacherById(id)
-  if(!prevData?.image) {
+  if(!prevData) {
     return { error: "Data not found!" }
   } else {
-    // await fs.rmSync(`./public/${prevData.image}`)
-    await del(prevData.image)
+    if(prevData.image) {
+      await del(prevData.image)
+    }
   }
   try { 
     await db.teacher.delete({
